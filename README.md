@@ -1,1 +1,1 @@
-# cocktail_time
+# cocktail-hour
