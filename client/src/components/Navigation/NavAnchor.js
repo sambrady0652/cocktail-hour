@@ -9,7 +9,7 @@ const NavAnchor = (props) => {
       label={label}
       disabled={disabled}
       icon={icon}
-      color="inherit"
+      color="#FDCF89"
     />
   )
 }

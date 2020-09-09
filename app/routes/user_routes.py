@@ -1,12 +1,14 @@
-import os
+# External Imports
 import bcrypt
 import boto3
 from datetime import datetime
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from flask import Blueprint, jsonify, request
 from flask import Blueprint, jsonify
+import os
 import re
 
+# Local Imports
 from app.models import db, User
 from app.models import User
 
@@ -17,12 +19,7 @@ s3 = boto3.resource('s3')
 bucket = s3.Bucket(os.environ.get('AWS_BUCKET'))
 
 
-@user_routes.route('/')
-def index():
-    response = User.query.all()
-    return {user.id: user.to_dict() for user in response}
-
-
+# SIGNUP
 @user_routes.route('/signup', methods=['POST'])
 def signup():
     # gather user submitted data
@@ -68,6 +65,7 @@ def signup():
     }, 200
 
 
+# SIGN IN
 @user_routes.route('/signin', methods=['POST'])
 def signin():
     # gather user submitted data
@@ -93,6 +91,7 @@ def signin():
     }, 200
 
 
+# Fetches/Updates User Details
 @user_routes.route('/<int:id>', methods=['GET', 'PATCH'])
 @jwt_required
 def user_page(id):
@@ -129,6 +128,7 @@ def user_page(id):
             return {'error': 'User was not found'}, 400
 
 
+# Deletes Account
 @user_routes.route('/delete_account', methods=['DELETE'])
 @jwt_required
 def delete_account():
@@ -146,6 +146,7 @@ def delete_account():
     return {'status': 200}
 
 
+# VALIDATION CHECKS
 def validations_signup(email, first_name, last_name, password):
     regex = '[^@]+@[^@]+\.[^@]+'
     errors = []
@@ -153,42 +154,35 @@ def validations_signup(email, first_name, last_name, password):
     email_found = User.query.filter(User.email == email).first()
     if(email_found):
         errors.append('Account already exists with this email address')
-    if not email:
-        errors.append('Email is missing')
-    if not first_name:
-        errors.append('first name is missing')
-    if not last_name:
-        errors.append('last name is missing')
-    if not password:
-        errors.append('password is missing')
-    if not re.search(regex, email):
+    if not email or not first_name or not last_name or not password:
+        errors.append('Please ensure all fields are complete')
+    if email and not re.search(regex, email):
         errors.append('email is not valid')
-    if len(first_name) > 40:
+    if len(first_name) > 25:
         errors.append('first name is too long')
-    if len(last_name) > 40:
+    if len(last_name) > 25:
         errors.append('last name is too long')
-    if len(email) > 255:
-        errors.append('email length is too long')
+    if len(email) > 100:
+        errors.append('please shorten your email')
     return errors
 
 
 def validations_signin(email, password):
     errors = []
+    if not email or not password:
+        errors.append('Please provide an email and password')
+        return errors
     user = User.query.filter_by(email=email).first()
     if not user:
-        errors.append('User was not found')
+        errors.append('No user with that email was found')
         return errors
     if user:
         password_match = bcrypt.checkpw(
             password.encode('utf-8'), user.encrypted_password)
-        if not email:
-            errors.append('Email is missing')
-        if not password:
-            errors.append('Password is missing')
         if not password_match:
             errors.append('Password is incorrect')
-        if len(email) > 255:
-            errors.append('email length is too long')
+        if len(email) > 100:
+            errors.append('please shorten your email')
     return errors
 
 

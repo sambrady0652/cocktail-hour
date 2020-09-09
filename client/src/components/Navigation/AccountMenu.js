@@ -17,7 +17,7 @@ const AccountMenu = () => {
       size="small"
       icon={false}
       focusIndicator={false}
-      hoverIndicator={{ color: "#ffffff" }}
+      hoverIndicator={{ color: "#362725", opacity: "B3" }}
       label="Account"
       items={[
         { label: 'Settings', onClick: () => { history.push("/settings") } },

@@ -5,9 +5,8 @@ import { Box, Text } from 'grommet'
 const ErrorBox = () => {
   const { authErrors } = useSelector(state => state.currentUser)
   return (
-    <Box align="start" pad="xsmall" border={{ color: "#ED2D23" }} round="xsmall" fill="horizontal" background="#ffe0e1">
-      <Text size="small">Please Adjust The Following:</Text>
-      {authErrors.map(err => <Text size="small">{err}</Text>)}
+    <Box align="start" pad="xsmall" border={{ color: "#832023" }} round="xsmall" fill="horizontal" background="#58542D" overflow={{ horizontal: "hidden", vertical: "visible" }}>
+      {authErrors.map(err => <Text size="xsmall">{err}</Text>)}
     </Box>
   )
 }

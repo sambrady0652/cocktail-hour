@@ -65,15 +65,6 @@ export const signUp = (firstName, lastName, email, password, imageUrl) => async 
   }
 }
 
-//FETCH USER DETAILS 
-export const fetchUserDetails = (access_token, id) => async dispatch => {
-  await fetch(`${apiUrl}/users/${id}`, {
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('SESSION_TOKEN')}`,
-    }
-  })
-  dispatch(setUser(access_token, id))
-}
 
 //SIGN OUT
 export const signOut = () => async (dispatch) => {

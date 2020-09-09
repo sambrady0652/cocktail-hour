@@ -23,7 +23,7 @@ const Signup = (props) => {
   const { toggleLast } = props
   return (
 
-    <Box align="center" pad="large">
+    <Box align="center" pad="large" background="#832023">
       <div>
         Already have an account? <SignInButton label="sign in here!" onClickProp={toggleLast} />
       </div>
@@ -55,16 +55,18 @@ const Signup = (props) => {
           type="password"
           value={password}
           onChange={e => setPassword(e.target.value)} />
-        <input
-          name="imageUrl"
-          type="file"
-          label="Profile Picture"
-          onChange={e => setImageUrl(e.target.files.item(0))} />
+        <Box margin="small">
+          <input
+            name="imageUrl"
+            type="file"
+            label="Profile Picture"
+            onChange={e => setImageUrl(e.target.files.item(0))} />
+        </Box>
         <Button
           type="submit"
           plain={false}
           primary
-          color="#ED2D23">
+          color="#362725">
           sign up</Button>
       </Form>
     </Box>

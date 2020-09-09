@@ -39,9 +39,10 @@ const SignInButton = (props) => {
   return (
     <Box>
       <Button
-
+        fill
         plain
-        hoverIndicator={{ color: "#ffffff" }}
+        //NOTE: Setting Opacity Here affects HoverIndicator On Nav Button
+        hoverIndicator={{ color: "#362725", opacity: "B3" }}
         label={label}
         onClick={() => { onClickProp ? onClickProp() : toggleLast() }} />
       {(showIn || showUp) && (

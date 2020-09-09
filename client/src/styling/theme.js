@@ -1,26 +1,32 @@
 export const theme = {
   global: {
     font: {
-      color: "#363135",
+      color: "#FDCF89",
       family: 'Arial',
       size: '16px',
       height: '20px',
     },
     focus: {
       border: {
-        color: "#DBD9DB"
+        color: "#58542D"
       },
     },
     hover: {
-      color: "#ED2D23"
-    }
+      color: "#C0521F"
+    },
+    colors: {
+      text: "#FDCF89"
+    },
   },
   anchor: {
     fontWeight: "normal",
     hover: {
       textDecoration: "none",
-      extend: "color: #ED2D23" // CHANGE 
+      extend: "color: #C0521F" // CHANGE 
     }
+  },
+  menu: {
+    background: "#832023",
   },
   tabs: {
     extend: "width: 100%",
@@ -44,6 +50,11 @@ export const theme = {
     },
   },
   image: {
-    extend: "border-radius: 5px; max-width: 100%; height: auto;"
+    extend: "max-width: 100%; height: auto;"
   },
+  formField: {
+    border: {
+      color: "#FDCF89"
+    },
+  }
 };

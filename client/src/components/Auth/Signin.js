@@ -24,7 +24,7 @@ const Signin = (props) => {
     dispatch(signIn("default@user.com", "password"))
   }
   return (
-    <Box align="center" pad="large">
+    <Box align="center" pad="large" background="#832023">
       <div>
         don't have an account? <SignInButton label="sign up here!" onClickProp={toggleLast} />
       </div>
@@ -36,7 +36,7 @@ const Signin = (props) => {
             type="submit"
             plain={false}
             primary
-            color="#ED2D23">
+            color="#362725">
             sign in as guest</Button>
         </Form>
       </Box>
@@ -58,7 +58,7 @@ const Signin = (props) => {
           type="submit"
           plain={false}
           primary
-          color="#ED2D23">
+          color="#362725">
           sign in</Button>
       </Form>
 
