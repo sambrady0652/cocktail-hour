@@ -1,12 +1,20 @@
-import re
+import os
 import bcrypt
+import boto3
+from datetime import datetime
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
-from app.models import db, User
 from flask import Blueprint, jsonify, request
 from flask import Blueprint, jsonify
+import re
+
+from app.models import db, User
 from app.models import User
 
 user_routes = Blueprint('users', __name__)
+
+# Initialize Boto3 to use AWS
+s3 = boto3.resource('s3')
+bucket = s3.Bucket(os.environ.get('AWS_BUCKET'))
 
 
 @user_routes.route('/')
@@ -22,6 +30,14 @@ def signup():
     first_name = request.form.get('first_name')
     last_name = request.form.get('last_name')
     password = request.form.get('password')
+    # set default profile picture unless a new one is supplied
+    image_url = "https://cocktail-hour-user-photos.s3.us-east-2.amazonaws.com/default_avatar.png"
+    if len(request.files) > 0:
+        img = request.files['imageUrl']
+        key = f'{datetime.now()}{img.filename}'
+        # if a new one is supplied, upload it to AWS Bucket and reassign value to new image
+        bucket.put_object(Key=key, Body=img, ContentType=img.content_type)
+        image_url = f'https://cocktail-hour-user-photos.s3.us-east-2.amazonaws.com/{key}'
 
     # validate there are no errors
     errors = validations_signup(email, first_name, last_name, password)
@@ -35,7 +51,7 @@ def signup():
 
     # create user in database, save changes to database
     new_user = User(email=email, first_name=first_name,
-                    last_name=last_name, encrypted_password=hashed_password)
+                    last_name=last_name, encrypted_password=hashed_password, image_url=image_url)
     db.session.add(new_user)
     db.session.commit()
 

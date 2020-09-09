@@ -11,7 +11,7 @@ class User(db.Model):
     last_name = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     encrypted_password = db.Column(db.LargeBinary, nullable=False)
-    profile_pic_url = db.Column(db.String)
+    image_url = db.Column(db.String)
 
     def to_dict(self):
         return {
@@ -19,5 +19,5 @@ class User(db.Model):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
-            "profile_pic_url": self.profile_pic_url
+            "image_url": self.image_url
         }
