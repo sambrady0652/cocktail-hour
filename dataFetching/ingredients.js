@@ -1,4 +1,4 @@
-const ingredients = [
+[
   { "id": "1", "name": "Vodka", "type": "Vodka", "alcoholic": "Yes" },
   { "id": "2", "name": "Gin", "type": "Gin", "alcoholic": "Yes" },
   { "id": "3", "name": "Rum", "type": "Rum", "alcoholic": "Yes" },
