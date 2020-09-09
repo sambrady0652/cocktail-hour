@@ -23,7 +23,7 @@ db.init_app(app)
 Migrate(app, db, compare_type=True)
 # Initializes JSON Web Tokens to be used with Flask App
 jwt = JWTManager(app)
-# Initializes CORS tobe used with Flask App
+# Initializes CORS tobe used with Flask_App
 CORS(app)
 
 
