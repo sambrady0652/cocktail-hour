@@ -12,6 +12,7 @@ class User(db.Model):
     email = db.Column(db.String(255), nullable=False, unique=True)
     encrypted_password = db.Column(db.LargeBinary, nullable=False)
     image_url = db.Column(db.String)
+    favorites = db.relationship("Favorite", back_populates="user")
 
     def to_dict(self):
         return {
@@ -19,7 +20,8 @@ class User(db.Model):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
-            "image_url": self.image_url
+            "image_url": self.image_url,
+            "favorites": self.favorites
         }
 
 
@@ -30,6 +32,14 @@ class Ingredient(db.Model):
     name = db.Column(db.String(40), nullable=False)
     type = db.Column(db.String(40))
     alcoholic = db.Column(db.String(40))
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "type": self.type,
+            "alcoholic": self.alcoholic,
+        }
 
 
 class Drink(db.Model):
@@ -43,3 +53,36 @@ class Drink(db.Model):
     ingredients = db.Column(db.ARRAY(db.String()))
     measurements = db.Column(db.ARRAY(db.String()))
     measured_ingredients = db.Column(db.ARRAY(db.String(), as_tuple=True))
+    favorites = db.relationship("Favorite", back_populates="drink")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "alcoholic": self.alcoholic,
+            "instructions": self.instructions,
+            "image_url": self.image_url,
+            "ingredients": self.ingredients,
+            "measurements": self.measurements,
+            "measured_ingredients": self.measured_ingredients,
+            "favorites": self.favorites
+        }
+
+
+class Favorite(db.Model):
+    __tablename__ = "favorites"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    drink_id = db.Column(db.Integer, db.ForeignKey(
+        "drinks.id"), nullable=False)
+
+    user = db.relationship("User", back_populates="favorites")
+    drink = db.relationship("Drink", back_populates="favorites")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user": self.user,
+            "drink": self.drink,
+        }
