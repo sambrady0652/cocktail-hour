@@ -6,7 +6,7 @@ import { Search } from 'grommet-icons'
 import SignInButton from './SignInButton'
 import AccountMenu from './AccountMenu'
 import NavAnchor from './NavAnchor';
-import SearchForm from './SearchForm';
+import SearchForm from '../Search/SearchForm';
 
 
 const Navbar = () => {
@@ -28,13 +28,27 @@ const Navbar = () => {
         <Anchor href='/' color="#FDCF89" margin={{ left: "large" }}><Heading level={3}>Cocktail Hour</Heading></Anchor>
       </Header>
       <Header >
-        <Box width="medium" alignContent="center">
-          {showSearch && <SearchForm />}
-        </Box>
-        <Button plain hoverIndicator={{ color: "#362725B3", opacity: "B3" }} onClick={toggleSearch}><Search color="#FDCF89" /></Button>
-        <NavAnchor label="Browse Drinks" href="/petitions" />
-        {needSignIn ? <NavAnchor disabled label="My Favorite Drinks" href="" /> : <NavAnchor label="My Favorite Drinks" href="" />}
+        {/* This Ternary Logic Determines whether to show the search form in the navbar */}
+        {showSearch ?
+          (
+            <Box width="medium" alignContent="center">
+              <SearchForm toggleSearch={toggleSearch} />
+            </Box>)
+          : (
+            <Box width="medium" align="end" justify="end">
+              <Button plain hoverIndicator={{ color: "#362725B3", opacity: "B3" }} onClick={toggleSearch}><Search color="#FDCF89" /></Button>
+            </Box>
+          )}
+        <NavAnchor label="Browse Drinks" href="/drinks" />
+        {/* This Ternary Logic Determines whether to activate the 'My Favorite Drinks' link based on whether the user is signed in */}
+        {needSignIn ?
+          (
+            <NavAnchor disabled label="My Favorite Drinks" href="" />)
+          : (
+            <NavAnchor label="My Favorite Drinks" href="" />
+          )}
         <Box width="xsmall" alignContent="center">
+          {/* This Ternary Logic Determines whether to show the sign in button or account menu based on whether the user is signed in */}
           {needSignIn ? <SignInButton label="Sign in" /> : <AccountMenu />}
         </Box>
       </Header>

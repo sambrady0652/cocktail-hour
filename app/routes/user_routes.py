@@ -4,13 +4,11 @@ import boto3
 from datetime import datetime
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from flask import Blueprint, jsonify, request
-from flask import Blueprint, jsonify
 import os
 import re
 
 # Local Imports
 from app.models import db, User
-from app.models import User
 
 user_routes = Blueprint('users', __name__)
 
@@ -136,12 +134,12 @@ def delete_account():
     current_user_id = get_jwt_identity()
 
     # retrieve user from data to be deleted if exists
-    temp_user = User.query.filter(User.id == current_user_id).first()
-    if temp_user is None:
-        return {'error': 'User with given id does not exist'}, 400
+    found_user = User.query.filter(User.id == current_user_id).first()
+    if not found_user:
+        return {'error': 'User not found'}, 400
 
     # delete user from database
-    db.session.delete(temp_user)
+    db.session.delete(found_user)
     db.session.commit()
     return {'status': 200}
 

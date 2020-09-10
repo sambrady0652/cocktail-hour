@@ -43,6 +43,9 @@ export const theme = {
     border: {
       color: "#FDCF89"
     },
+    suggestions: {
+      extend: "background-color: #832023; font-size: 16px; line-height: 10px"
+    },
     extend: "border-top-style: hidden; border-right-style: hidden; border-left-style: hidden; border-bottom-color: #FDCF89; border-radius: 0px"
   }
 };

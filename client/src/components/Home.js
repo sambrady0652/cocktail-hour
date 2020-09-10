@@ -1,13 +1,16 @@
 import React from 'react'
-import { Box } from 'grommet'
-
-import Navbar from './Navigation/Navbar'
+import { useSelector } from 'react-redux'
+import { Redirect } from 'react-router-dom';
 
 const Home = () => {
+  const { redirect } = useSelector(state => state.search)
+  if (redirect) {
+    return <Redirect to="/search_results" />
+  }
+
   return (
-    <Box fill style={{ position: "absolute" }} background="url(https://cocktail-hour-user-photos.s3.us-east-2.amazonaws.com/scope1.jpg)">
-      <Navbar />
-    </Box>
+    <div>HOME</div>
+
   )
 }
 
