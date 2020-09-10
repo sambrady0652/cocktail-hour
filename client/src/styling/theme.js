@@ -6,6 +6,11 @@ export const theme = {
       size: '16px',
       height: '20px',
     },
+    input: {
+      font: {
+        weight: 400
+      }
+    },
     focus: {
       border: {
         color: "#58542D"
@@ -15,7 +20,7 @@ export const theme = {
       color: "#C0521F"
     },
     colors: {
-      text: "#FDCF89"
+      text: "#FDCF89",
     },
   },
   anchor: {
@@ -31,30 +36,13 @@ export const theme = {
   tabs: {
     extend: "width: 100%",
   },
-  tab: {
-    color: "#363135",
-    hover: {
-      color: "#ED2D23",
-    },
-    active: {
-      color: "#ED2D23",
-    },
-    border: {
-      color: "#363135",
-      active: {
-        color: "#ED2D23"
-      },
-      hover: {
-        color: "#ED2D23"
-      }
-    },
-  },
   image: {
     extend: "max-width: 100%; height: auto;"
   },
-  formField: {
+  textInput: {
     border: {
       color: "#FDCF89"
     },
+    extend: "border-top-style: hidden; border-right-style: hidden; border-left-style: hidden; border-bottom-color: #FDCF89; border-radius: 0px"
   }
 };

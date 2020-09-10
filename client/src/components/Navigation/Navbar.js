@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { Header, Heading, Anchor, Box, FormField, Form, Button } from 'grommet'
+import { Header, Heading, Anchor, Box, Button } from 'grommet'
 import { Search } from 'grommet-icons'
+
 import SignInButton from './SignInButton'
 import AccountMenu from './AccountMenu'
 import NavAnchor from './NavAnchor';
+import SearchForm from './SearchForm';
 
 
 const Navbar = () => {
@@ -27,7 +29,7 @@ const Navbar = () => {
       </Header>
       <Header >
         <Box width="medium" alignContent="center">
-          {showSearch && <Form><FormField placeholder="Search" type="text" /></Form>}
+          {showSearch && <SearchForm />}
         </Box>
         <Button plain hoverIndicator={{ color: "#362725B3", opacity: "B3" }} onClick={toggleSearch}><Search color="#FDCF89" /></Button>
         <NavAnchor label="Browse Drinks" href="/petitions" />
