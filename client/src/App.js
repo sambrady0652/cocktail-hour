@@ -7,7 +7,7 @@ import Home from './components/Home'
 import SearchResults from './components/Search/SearchResults'
 import Navbar from './components/Navigation/Navbar'
 import Footer from './components/Navigation/Footer'
-import { setUser } from './store/auth'
+import { fetchFavorites } from './store/auth'
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
     useEffect(() => {
         // Pass session details to Redux Store so Session persists
         if (token && id) {
-            dispatch(setUser(token, id))
+            dispatch(fetchFavorites(token, id))
         }
     })
     return (
@@ -26,7 +26,7 @@ function App() {
             <BrowserRouter>
                 <Navbar />
                 {/* Setting this Box as main Content Container, positioning it underneath the Navbar */}
-                <Box style={{ position: "relative", top: 85 }}>
+                <Box style={{ position: "relative", top: 85 }} >
                     <Switch>
                         <Route
                             exact path="/"

@@ -16,9 +16,7 @@ const Home = () => {
       <Box background="#832023">
         <Text>HOME CONTENT</Text>
       </Box>
-      <Box background="#832023">
-        <Text>Pick your favorite liquor</Text>
-        <Text>Let's find a drink with it!</Text>
+      <Box background="#832023" round="small">
         <IngredientsSearchForm />
       </Box>
     </Box>

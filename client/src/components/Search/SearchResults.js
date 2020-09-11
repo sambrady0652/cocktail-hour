@@ -4,19 +4,21 @@ import { Redirect } from 'react-router-dom'
 import { Box } from 'grommet'
 
 import SearchResultCard from './SearchResultCard'
+import IngredientsSearchForm from './IngredientsSearchForm'
 
 const SearchResults = () => {
   const { results, redirect } = useSelector(state => state.search)
-  console.log(results)
   if (!redirect) {
     return <Redirect to="/" />
   }
   return (
-
-    <Box overflow="scroll" justify="center">
-      <div>Search Results</div>
-      {results.map(drink => <SearchResultCard drink={drink} key={drink.id} />)}
-
+    <Box direction="row" align="start" justify="around" overflow="scroll" gap="small">
+      <Box>
+        {results.map(drink => <SearchResultCard drink={drink} key={drink.id} />)}
+      </Box>
+      <Box background="#832023" round="small">
+        <IngredientsSearchForm />
+      </Box>
     </Box>
   )
 }

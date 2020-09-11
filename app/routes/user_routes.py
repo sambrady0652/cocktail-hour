@@ -8,7 +8,7 @@ import os
 import re
 
 # Local Imports
-from app.models import db, User
+from app.models import db, User, Favorite
 
 user_routes = Blueprint('users', __name__)
 
@@ -142,6 +142,25 @@ def delete_account():
     db.session.delete(found_user)
     db.session.commit()
     return {'status': 200}
+
+# FAVORITES ROUTES
+
+
+# Fetch User's Favorites
+@user_routes.route('/<int:id>/favorites', methods=['GET', 'POST', 'DELETE'])
+@jwt_required
+def get_favorites(id):
+    if request.method == 'GET':
+        favorites = Favorite.query.filter(Favorite.user_id == id).all()
+        print(favorites)
+        return {'favorites': favorites}
+    elif request.method == 'POST':
+        # FAVORITE DRINK
+        return {}
+
+    elif request.method == 'DELETE':
+        # REMOVE FAVORITE
+        return {}
 
 
 # VALIDATION CHECKS

@@ -25,6 +25,7 @@ export const signIn = (email, password) => async dispatch => {
     const { access_token, id } = await response.json();
     localStorage.setItem(SESSION_TOKEN, access_token);
     localStorage.setItem(USER_ID, id);
+    //FETCH FAVORITES HERE 
     dispatch(setUser(access_token, id));
   }
   catch (err) {
@@ -57,7 +58,9 @@ export const signUp = (firstName, lastName, email, password, imageUrl) => async 
     const { access_token, id } = await response.json();
     localStorage.setItem(SESSION_TOKEN, access_token);
     localStorage.setItem(USER_ID, id);
-    dispatch(setUser(access_token, id));
+    //Set favorite drinks to an empty array when user is created
+    const favoriteDrinks = []
+    dispatch(setUser(access_token, id, favoriteDrinks));
   }
   catch (err) {
     const errJSON = await err.json()
@@ -73,12 +76,44 @@ export const signOut = () => async (dispatch) => {
   dispatch(removeUser())
 }
 
+// FAVORITES FUNCTIONS
+
+
+export const fetchFavorites = (token, id) => async dispatch => {
+  try {
+    const res = await fetch(`${apiUrl}/users/${id}/favorites`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+
+    if (!res.ok) {
+      throw res
+    }
+    const { favorites } = await res.json()
+    dispatch(setUser(token, id, favorites))
+  }
+  catch (e) {
+    console.error(e)
+  }
+
+}
+
+export const favoriteDrink = (userId, drinkId) => {
+
+}
+
+export const unFavoriteDrink = () => {
+
+}
+
 
 //ACTION CREATOR FUNCTIONS
-export const setUser = (access_token, id) => ({
+export const setUser = (access_token, id, favorites) => ({
   type: SET_USER,
   access_token,
   id: Number(id),
+  favorites
 });
 
 export const handleAuthErrors = (errJSON) => ({
@@ -100,7 +135,8 @@ export default function reducer(state = { needSignIn: true }, action) {
       return {
         token: action.access_token,
         id: action.id,
-        needSignIn: false
+        needSignIn: false,
+        favorites: []
       }
     }
     case AUTH_ERROR: {

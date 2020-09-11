@@ -21,7 +21,7 @@ def get_options():
 
 
 # Search By Ingredient Type
-@ingredient_routes.route('/search/results', methods=['POST'])
+@ingredient_routes.route('/type/search/results', methods=['POST'])
 def get_results():
     # Dropdown menu on front-end provides ingredient Types. Retrieve it here
     ingredient_type = request.json.get('searchTerm')

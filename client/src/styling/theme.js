@@ -33,11 +33,18 @@ export const theme = {
   menu: {
     background: "#832023",
   },
-  tabs: {
-    extend: "width: 100%",
+  select: {
+    icons: {
+      color: "#FDCF89"
+    },
+    options: {
+      container: {
+        background: "#832023",
+      }
+    }
   },
   image: {
-    extend: "max-width: 100%; height: auto;"
+    extend: "max-width: 100%; height: auto; border-radius: 5px"
   },
   textInput: {
     border: {
