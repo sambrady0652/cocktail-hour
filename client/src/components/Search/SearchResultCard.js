@@ -9,13 +9,12 @@ const SearchResultCard = (props) => {
   return (
     <Card width="large" background="#362725B3" height="medium">
       <Box direction="row">
-        <CardBody height="small">
-          <Image
-            fill
-            fit="cover"
-            src={image_url}
-          />
-        </CardBody>
+
+        <Image
+          fit="cover"
+          src={image_url}
+        />
+
         <Box direction="column" pad={{ horizontal: 'medium' }} responsive={true}>
           <Anchor color="inherit" href={`/drinks/${id}`}>
             <Heading level="3" margin={{ bottom: "none" }}>{name}</Heading>

@@ -10,6 +10,7 @@ from flask_jwt_extended import JWTManager
 from app.models import db, User
 from app.routes.user_routes import user_routes
 from app.routes.drink_routes import drink_routes
+from app.routes.ingredient_routes import ingredient_routes
 from app.config import Config
 
 # Creates a Flask App named 'app'
@@ -19,6 +20,7 @@ app.config.from_object(Config)
 # Register API Route Blueprints
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(drink_routes, url_prefix='/api/drinks')
+app.register_blueprint(ingredient_routes, url_prefix='/api/ingredients')
 # Connects Flask App to Database Models
 db.init_app(app)
 # Uses Flask Migrate to establish ORM

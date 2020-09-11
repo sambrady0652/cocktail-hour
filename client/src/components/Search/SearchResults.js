@@ -7,20 +7,17 @@ import SearchResultCard from './SearchResultCard'
 
 const SearchResults = () => {
   const { results, redirect } = useSelector(state => state.search)
+  console.log(results)
   if (!redirect) {
     return <Redirect to="/" />
   }
   return (
-    <>
-      <Box overflow="scroll">
-        <div>Search Results</div>
-        {results.map(drink => <SearchResultCard drink={drink} key={drink.id} />)}
 
-      </Box>
-      <Box align="center">
-        <div>Try Ingredients Search!</div>
-      </Box>
-    </>
+    <Box overflow="scroll" justify="center">
+      <div>Search Results</div>
+      {results.map(drink => <SearchResultCard drink={drink} key={drink.id} />)}
+
+    </Box>
   )
 }
 

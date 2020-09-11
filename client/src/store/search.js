@@ -3,9 +3,9 @@ import { apiUrl } from '../config';
 
 const SET_SEARCH_RESULTS = "/cocktail_hour/drinks/search/SET_SEARCH_RESULTS"
 
-export const fetchSearch = async (searchTerm, location) => {
+export const fetchDrinks = async (searchTerm, route) => {
   try {
-    const res = await fetch(`${apiUrl}/drinks/search/${location}`, {
+    const res = await fetch(`${apiUrl}/${route}`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
@@ -19,6 +19,23 @@ export const fetchSearch = async (searchTerm, location) => {
 
     const drinksList = await res.json()
     return drinksList['results']
+  }
+  catch (e) {
+    console.error(e.message)
+  }
+}
+
+export const fetchIngredients = async () => {
+  try {
+    const res = await fetch(`${apiUrl}/ingredients/`)
+
+    if (!res.ok) {
+      throw res
+    }
+
+    const ingredients = await res.json()
+    const ingredientNames = ingredients['results'].map(ingredient => ingredient.name)
+    return ingredientNames
   }
   catch (e) {
     console.error(e.message)

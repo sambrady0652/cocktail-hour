@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { TextInput, Form, Button, Box, Text } from 'grommet'
 import { Search } from 'grommet-icons'
 
-import { fetchSearch, setSearchResults } from '../../store/search'
+import { fetchDrinks, setSearchResults } from '../../store/search'
 
 
 const SearchForm = (props) => {
@@ -16,8 +16,15 @@ const SearchForm = (props) => {
     setSearchTerm(e.target.value)
     //NOTE: use e.target.value directly in fetch call because useState is "one step behind" 
     //This is the result of useState's 'pending state' feature. 
-    const suggestions = await fetchSearch(e.target.value, "suggestions")
+    const suggestions = await fetchDrinks(e.target.value, "drinks/search/suggestions")
     setSuggestions(suggestions.map(suggObj => suggObj.name))
+  }
+
+  const handleSelect = async (e) => {
+    setSearchTerm(e.suggestion)
+    //See note above for rationale on using e.suggestion
+    const results = await fetchDrinks(e.suggestion, "drinks/search/results")
+    dispatch(setSearchResults(results, true))
   }
 
   const handleSubmit = async (e) => {
@@ -27,7 +34,7 @@ const SearchForm = (props) => {
       dispatch(setSearchResults([], false))
     }
     else {
-      const results = await fetchSearch(searchTerm, "results")
+      const results = await fetchDrinks(searchTerm, "drinks/search/results")
       dispatch(setSearchResults(results, true))
     }
   }
@@ -42,7 +49,7 @@ const SearchForm = (props) => {
           value={searchTerm}
           onChange={handleChange}
           suggestions={suggestions}
-          onSelect={e => setSearchTerm(e.suggestion)}
+          onSelect={handleSelect}
         />
         <Button
           plain
