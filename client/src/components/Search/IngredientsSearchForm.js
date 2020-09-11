@@ -5,7 +5,7 @@ import { Form, Select, Button } from 'grommet'
 import { fetchDrinks, setSearchResults } from '../../store/search'
 
 const IngredientsSearchForm = () => {
-  const [ingredient, setIngredient] = useState('whiskey');
+  const [ingredient, setIngredient] = useState('Whiskey');
   const dispatch = useDispatch()
 
   const handleSubmit = async (e) => {
@@ -17,7 +17,7 @@ const IngredientsSearchForm = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <Select
-        options={["whiskey", "gin"]}
+        options={["Whiskey"]}
         value={ingredient}
         onChange={({ option }) => setIngredient(option)}
       />

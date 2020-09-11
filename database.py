@@ -15,7 +15,8 @@ with app.app_context():
         for ingredient in data:
             new_ingredient = Ingredient(
                 name=ingredient['name'],
-                type=ingredient['type'])
+                type=ingredient['type'],
+                alcoholic=ingredient['alcoholic'])
             db.session.add(new_ingredient)
             db.session.commit()
 

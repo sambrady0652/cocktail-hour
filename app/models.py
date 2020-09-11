@@ -1,8 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-# Note: the default ARRAY datatype offered by db does not support most comparison operations
-# so I am using the postgresql dialect-specific array datatype, which works with psycopg2.
-# see ingredients_routes.py for implementation.
-from sqlalchemy.dialects import postgresql
+# from sqlalchemy.dialects.postgresql import ARRAY
 
 db = SQLAlchemy()
 
@@ -35,12 +32,14 @@ class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
     type = db.Column(db.String(40))
+    alcoholic = db.Column(db.String(40))
 
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
-            "type": self.type
+            "type": self.type,
+            "alcoholic": self.alcoholic,
         }
 
 
@@ -52,10 +51,9 @@ class Drink(db.Model):
     alcoholic = db.Column(db.String(40), nullable=False)
     instructions = db.Column(db.Text(), nullable=False)
     image_url = db.Column(db.String())
-    ingredients = db.Column(postgresql.ARRAY(db.String()))
-    measurements = db.Column(postgresql.ARRAY(db.String()))
-    measured_ingredients = db.Column(
-        postgresql.ARRAY(db.String(), as_tuple=True))
+    ingredients = db.Column(db.ARRAY(db.String()))
+    measurements = db.Column(db.ARRAY(db.String()))
+    measured_ingredients = db.Column(db.ARRAY(db.String(), as_tuple=True))
     favorites = db.relationship("Favorite", back_populates="drink")
 
     def to_dict(self):
