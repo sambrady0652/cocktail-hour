@@ -6,6 +6,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from flask import Blueprint, jsonify, request
 import os
 import re
+from sqlalchemy import and_
 
 # Local Imports
 from app.models import db, User, Favorite
@@ -143,23 +144,35 @@ def delete_account():
     db.session.commit()
     return {'status': 200}
 
+
 # FAVORITES ROUTES
-
-
 # Fetch User's Favorites
-@user_routes.route('/<int:id>/favorites', methods=['GET', 'POST', 'DELETE'])
-@jwt_required
+@user_routes.route('/<int:id>/favorites')
+# @jwt_required
 def get_favorites(id):
-    if request.method == 'GET':
-        favorites = Favorite.query.filter(Favorite.user_id == id).all()
-        print(favorites)
-        return {'favorites': favorites}
-    elif request.method == 'POST':
-        # FAVORITE DRINK
-        return {}
+    favorites = [favorite.to_dict()['drink_id'] for favorite in Favorite.query.filter(
+        Favorite.user_id == id).all()]
+    return {'favorites': favorites}
 
-    elif request.method == 'DELETE':
-        # REMOVE FAVORITE
+
+@user_routes.route('/<int:id>/favorites/<int:drink_id>', methods=['POST', 'DELETE'])
+@jwt_required
+def fav_drink(id, drink_id):
+    if request.method == 'POST':
+        # FAVORITE DRINK
+        new_favorite = Favorite(user_id=id, drink_id=drink_id)
+        db.session.add(new_favorite)
+        db.session.commit()
+        print("THIS IS THE NEW FAV", new_favorite.to_dict())
+        return {'new_favorite_id': new_favorite.to_dict()['drink_id']}
+
+    if request.method == 'DELETE':
+        # UNFAVORITE DRINK
+        favorite_to_delete = Favorite.query.filter(
+            and_(Favorite.user_id == id, Favorite.drink_id == drink_id)).one()
+        print("DELETING THIS FAV", favorite_to_delete.to_dict())
+        db.session.delete(favorite_to_delete)
+        db.session.commit()
         return {}
 
 

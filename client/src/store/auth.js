@@ -25,7 +25,6 @@ export const signIn = (email, password) => async dispatch => {
     const { access_token, id } = await response.json();
     localStorage.setItem(SESSION_TOKEN, access_token);
     localStorage.setItem(USER_ID, id);
-    //FETCH FAVORITES HERE 
     dispatch(setUser(access_token, id));
   }
   catch (err) {
@@ -58,9 +57,7 @@ export const signUp = (firstName, lastName, email, password, imageUrl) => async 
     const { access_token, id } = await response.json();
     localStorage.setItem(SESSION_TOKEN, access_token);
     localStorage.setItem(USER_ID, id);
-    //Set favorite drinks to an empty array when user is created
-    const favoriteDrinks = []
-    dispatch(setUser(access_token, id, favoriteDrinks));
+    dispatch(setUser(access_token, id));
   }
   catch (err) {
     const errJSON = await err.json()
@@ -79,11 +76,11 @@ export const signOut = () => async (dispatch) => {
 // FAVORITES FUNCTIONS
 
 
-export const fetchFavorites = (token, id) => async dispatch => {
+export const fetchFavorites = async (id) => {
   try {
     const res = await fetch(`${apiUrl}/users/${id}/favorites`, {
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${localStorage.getItem('SESSION_TOKEN')}`,
       }
     })
 
@@ -91,7 +88,7 @@ export const fetchFavorites = (token, id) => async dispatch => {
       throw res
     }
     const { favorites } = await res.json()
-    dispatch(setUser(token, id, favorites))
+    return favorites
   }
   catch (e) {
     console.error(e)
@@ -99,14 +96,26 @@ export const fetchFavorites = (token, id) => async dispatch => {
 
 }
 
-export const favoriteDrink = (userId, drinkId) => {
-
+export const favButton = async (userId, drinkId, method) => {
+  try {
+    const res = await fetch(`${apiUrl}/users/${userId}/favorites/${drinkId}`, {
+      method: `${method}`,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('SESSION_TOKEN')}`,
+        'Content-Type': 'application/json'
+      },
+      body: { 'user_id': userId, 'drink_id': drinkId }
+    });
+    if (!res.ok) {
+      throw res
+    }
+    const { new_favorite_id } = await res.json()
+    return new_favorite_id
+  }
+  catch (e) {
+    console.error(e.message)
+  }
 }
-
-export const unFavoriteDrink = () => {
-
-}
-
 
 //ACTION CREATOR FUNCTIONS
 export const setUser = (access_token, id, favorites) => ({
@@ -134,9 +143,9 @@ export default function reducer(state = { needSignIn: true }, action) {
     case SET_USER: {
       return {
         token: action.access_token,
-        id: action.id,
+        userId: action.id,
         needSignIn: false,
-        favorites: []
+
       }
     }
     case AUTH_ERROR: {

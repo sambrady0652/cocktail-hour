@@ -25,7 +25,7 @@ class User(db.Model):
             "last_name": self.last_name,
             "email": self.email,
             "image_url": self.image_url,
-            "favorites": self.favorites
+            # "favorites": self.favorites
         }
 
 
@@ -68,7 +68,7 @@ class Drink(db.Model):
             "ingredients": self.ingredients,
             "measurements": self.measurements,
             "measured_ingredients": self.measured_ingredients,
-            "favorites": self.favorites
+            # "favorites": self.favorites
         }
 
 
@@ -86,6 +86,6 @@ class Favorite(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "user": self.user,
-            "drink": self.drink,
+            "user_id": self.user_id,
+            "drink_id": self.drink_id,
         }

@@ -7,7 +7,7 @@ import Home from './components/Home'
 import SearchResults from './components/Search/SearchResults'
 import Navbar from './components/Navigation/Navbar'
 import Footer from './components/Navigation/Footer'
-import { fetchFavorites } from './store/auth'
+import { setUser } from './store/auth'
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
     useEffect(() => {
         // Pass session details to Redux Store so Session persists
         if (token && id) {
-            dispatch(fetchFavorites(token, id))
+            dispatch(setUser(token, id))
         }
     })
     return (
