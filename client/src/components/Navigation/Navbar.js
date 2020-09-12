@@ -45,7 +45,7 @@ const Navbar = () => {
           (
             <NavAnchor disabled label="My Favorite Drinks" href="" />)
           : (
-            <NavAnchor label="My Favorite Drinks" href="" />
+            <NavAnchor label="My Favorite Drinks" href="/my_favorites" />
           )}
         <Box width="xsmall" alignContent="center">
           {/* This Ternary Logic Determines whether to show the sign in button or account menu based on whether the user is signed in */}

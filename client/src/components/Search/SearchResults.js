@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom'
 import { Box } from 'grommet'
 
-import SearchResultCard from './SearchResultCard'
+import DrinkCard from './DrinkCard'
 import IngredientsSearchForm from './IngredientsSearchForm'
 
 const SearchResults = () => {
@@ -14,7 +14,7 @@ const SearchResults = () => {
   return (
     <Box direction="row" align="start" justify="around" overflow="scroll" gap="small">
       <Box>
-        {results.map(drink => <SearchResultCard drink={drink} key={drink.id} />)}
+        {results.map(drink => <DrinkCard drink={drink} key={drink.id} />)}
       </Box>
       <Box background="#832023" round="small">
         <IngredientsSearchForm />

@@ -1,27 +1,35 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from 'grommet'
 import { Favorite } from 'grommet-icons'
 
 import ErrorBox from '../Auth/ErrorBox'
-import SignInButton from '../Navigation/SignInButton'
 import { favButton, fetchFavorites } from '../../store/auth'
+import { getIds } from './helperFunctions'
+import SignInButton from '../Navigation/SignInButton'
+import { FavPageContext } from './MyFavorites'
 
 const FavoriteButton = (props) => {
   const { drinkId, setIsFavorited, isFavorited } = props
   const { needSignIn, userId, authErrors } = useSelector(state => state.currentUser)
   const dispatch = useDispatch()
-
+  const setFavsList = useContext(FavPageContext)
   const addFav = async () => {
     await dispatch(favButton(userId, drinkId, "POST"))
     const favs = await fetchFavorites(userId)
-    setIsFavorited(favs.includes(drinkId))
+    setIsFavorited(getIds(favs).includes(drinkId))
+    if (setFavsList) {
+      setFavsList(favs)
+    }
   }
 
   const removeFav = async () => {
     await dispatch(favButton(userId, drinkId, "DELETE"))
     const favs = await fetchFavorites(userId)
-    setIsFavorited(favs.includes(drinkId))
+    setIsFavorited(getIds(favs).includes(drinkId))
+    if (setFavsList) {
+      setFavsList(favs)
+    }
   }
 
   return (

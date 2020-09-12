@@ -4,9 +4,10 @@ import { useDispatch } from 'react-redux';
 import { Box } from 'grommet'
 
 import Home from './components/Home'
-import SearchResults from './components/Search/SearchResults'
-import Navbar from './components/Navigation/Navbar'
 import Footer from './components/Navigation/Footer'
+import MyFavorites from './components/Favorite/MyFavorites'
+import Navbar from './components/Navigation/Navbar'
+import SearchResults from './components/Search/SearchResults'
 import { setUser } from './store/auth'
 
 
@@ -34,6 +35,9 @@ function App() {
                         <Route
                             path="/search_results"
                             component={SearchResults} />
+                        <Route
+                            path="/my_favorites"
+                            component={MyFavorites} />
                     </Switch>
                 </Box>
             </BrowserRouter>

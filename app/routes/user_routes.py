@@ -9,7 +9,7 @@ import re
 from sqlalchemy import and_
 
 # Local Imports
-from app.models import db, User, Favorite
+from app.models import db, User, Favorite, Drink
 
 user_routes = Blueprint('users', __name__)
 
@@ -150,9 +150,12 @@ def delete_account():
 @user_routes.route('/<int:id>/favorites')
 @jwt_optional
 def get_favorites(id):
-    favorites = [favorite.to_dict()['drink_id'] for favorite in Favorite.query.filter(
+    favorites = [favorite.to_dict() for favorite in Favorite.query.filter(
         Favorite.user_id == id).all()]
-    return {'favorites': favorites}
+    favIds = [fav['drink_id'] for fav in favorites]
+    favorite_drinks = [drink.to_dict()
+                       for drink in Drink.query.filter(Drink.id.in_(favIds))]
+    return {'favorites': favorite_drinks}
 
 
 @user_routes.route('/<int:id>/favorites/<int:drink_id>', methods=['POST', 'DELETE'])

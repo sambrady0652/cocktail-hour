@@ -5,8 +5,9 @@ import { Box, Image, Heading, Paragraph, Text } from 'grommet'
 
 import FavoriteButton from '../Favorite/FavoriteButton'
 import { fetchFavorites } from '../../store/auth'
+import { getIds } from '../Favorite/helperFunctions'
 
-const SearchResultCard = (props) => {
+const DrinkCard = (props) => {
   const { userId, needSignIn } = useSelector(state => state.currentUser)
   const { id, name, alcoholic, instructions, image_url, measured_ingredients } = props.drink
   //NOTE: Some of data has empty ingredients string, so this filters those out.
@@ -18,7 +19,7 @@ const SearchResultCard = (props) => {
     async function favFetch() {
       if (!needSignIn && userId) {
         const favs = await fetchFavorites(userId)
-        setIsFavorited(favs.includes(id))
+        setIsFavorited(getIds(favs).includes(id))
       }
     }
     favFetch()
@@ -64,4 +65,4 @@ const SearchResultCard = (props) => {
   )
 }
 
-export default SearchResultCard
+export default DrinkCard
