@@ -90,13 +90,12 @@ export const fetchFavorites = async (id) => {
     const { favorites } = await res.json()
     return favorites
   }
-  catch (e) {
-    console.error(e)
+  catch (err) {
+    console.error(err.message)
   }
-
 }
 
-export const favButton = async (userId, drinkId, method) => {
+export const favButton = (userId, drinkId, method) => async dispatch => {
   try {
     const res = await fetch(`${apiUrl}/users/${userId}/favorites/${drinkId}`, {
       method: `${method}`,
@@ -112,8 +111,9 @@ export const favButton = async (userId, drinkId, method) => {
     const { new_favorite_id } = await res.json()
     return new_favorite_id
   }
-  catch (e) {
-    console.error(e.message)
+  catch (err) {
+    const errJSON = await err.json()
+    dispatch(handleAuthErrors(errJSON))
   }
 }
 

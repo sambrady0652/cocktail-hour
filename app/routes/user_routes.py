@@ -2,7 +2,7 @@
 import bcrypt
 import boto3
 from datetime import datetime
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, jwt_optional
 from flask import Blueprint, jsonify, request
 import os
 import re
@@ -148,7 +148,7 @@ def delete_account():
 # FAVORITES ROUTES
 # Fetch User's Favorites
 @user_routes.route('/<int:id>/favorites')
-# @jwt_required
+@jwt_optional
 def get_favorites(id):
     favorites = [favorite.to_dict()['drink_id'] for favorite in Favorite.query.filter(
         Favorite.user_id == id).all()]
@@ -156,21 +156,19 @@ def get_favorites(id):
 
 
 @user_routes.route('/<int:id>/favorites/<int:drink_id>', methods=['POST', 'DELETE'])
-@jwt_required
+@jwt_optional
 def fav_drink(id, drink_id):
     if request.method == 'POST':
         # FAVORITE DRINK
         new_favorite = Favorite(user_id=id, drink_id=drink_id)
         db.session.add(new_favorite)
         db.session.commit()
-        print("THIS IS THE NEW FAV", new_favorite.to_dict())
         return {'new_favorite_id': new_favorite.to_dict()['drink_id']}
 
     if request.method == 'DELETE':
         # UNFAVORITE DRINK
         favorite_to_delete = Favorite.query.filter(
             and_(Favorite.user_id == id, Favorite.drink_id == drink_id)).one()
-        print("DELETING THIS FAV", favorite_to_delete.to_dict())
         db.session.delete(favorite_to_delete)
         db.session.commit()
         return {}

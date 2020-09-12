@@ -9,7 +9,7 @@ const SignInButton = (props) => {
 
   const [showIn, setShowIn] = useState(false)
   const [showUp, setShowUp] = useState(false)
-  const { label, onClickProp } = props
+  const { label, onClickProp, icon } = props
   const { needSignIn } = useSelector(state => state.currentUser)
 
   useEffect(() => {
@@ -39,11 +39,12 @@ const SignInButton = (props) => {
   return (
     <Box>
       <Button
-        fill
         plain
         //NOTE: Setting Opacity Here affects HoverIndicator On Nav Button
         hoverIndicator={{ color: "#362725", opacity: "B3" }}
+        focusIndicator={false}
         label={label}
+        icon={icon}
         onClick={() => { onClickProp ? onClickProp() : toggleLast() }} />
       {(showIn || showUp) && (
         <Layer
