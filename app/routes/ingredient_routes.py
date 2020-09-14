@@ -1,5 +1,4 @@
 # External Imports
-import boto3
 from flask import Blueprint, jsonify, request
 import os
 import re
@@ -20,24 +19,52 @@ def get_options():
                         for ingredient in ingredient_list]}
 
 
-# Search By Ingredient Type
-@ingredient_routes.route('/type/search/results', methods=['POST'])
-def get_results():
-    # Dropdown menu on front-end provides ingredient Types. Retrieve it here
+# Retrieve List of Ingredient Types
+@ingredient_routes.route('/type')
+def get_types():
+    # Retrieve list of all ingredient types
+    type_list = [ingredient.to_dict()['type']
+                 for ingredient in Ingredient.query.order_by(Ingredient.type).all()]
+
+    # Filter the list to only include one iteration of each type
+    filtered_types = []
+    for t in type_list:
+        if t not in filtered_types:
+            filtered_types.append(t)
+
+    # Return list of Types
+    return {'types': filtered_types}
+
+
+# Retrieve list of Ingredients, given a selected type
+@ingredient_routes.route('/type/list', methods=['POST'])
+def get_ingredients():
+    # Dropdown menu on front-end provides Ingredient Type. Retrieve it here
     ingredient_type = request.json.get('searchTerm')
     if ingredient_type == "":
-        return {'results': []}
-    # Find all ingredients of specified type, make a list of their Names
+        return {'ingredients': []}
+
+    # Find all ingredients of specified type, make a list of their names
     ingredients_list = [ingredient.to_dict()['name'] for ingredient in Ingredient.query.filter(
         Ingredient.type.ilike(ingredient_type + "%")).all()]
 
-    # For each ingredient in list created above, find drinks that include the ingredient
-    drinks_list = []
-    for ingredient in ingredients_list:
-        drinks = Drink.query.filter(Drink.ingredients.any(
-            ingredient, operator=ilike_op)).all()
-        drinks_list.extend(drinks)
+    # Return list of ingredients
+    return {'ingredients': ingredients_list}
+
+
+# Retrieve list of drinks, given selected ingredient
+@ingredient_routes.route('/type/search/results', methods=['POST'])
+def get_results():
+    # Dropdown menu on front-end provides ingredient. Retrieve it here
+    ingredient = request.json.get('searchTerm')
+    if ingredient == "":
+        return {'results': []}
+
+    # find drinks that include the ingredient
+    drinks_list = Drink.query.filter(Drink.ingredients.any(
+        ingredient, operator=ilike_op)).all()
 
     # Return list of drinks
+    print("THESE ARE RESULTS", drinks_list)
     return {'results': [drink.to_dict()
                         for drink in drinks_list]}

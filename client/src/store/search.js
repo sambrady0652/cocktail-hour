@@ -25,17 +25,38 @@ export const fetchDrinks = async (searchTerm, route) => {
   }
 }
 
-export const fetchIngredients = async () => {
+export const fetchIngredientTypes = async () => {
   try {
-    const res = await fetch(`${apiUrl}/ingredients/`)
+    const res = await fetch(`${apiUrl}/ingredients/type`)
 
     if (!res.ok) {
       throw res
     }
 
-    const ingredients = await res.json()
-    const ingredientNames = ingredients['results'].map(ingredient => ingredient.name)
-    return ingredientNames
+    const { types } = await res.json()
+    return types
+  }
+  catch (e) {
+    console.error(e.message)
+  }
+}
+
+export const fetchIngredients = async (searchTerm) => {
+  try {
+    const res = await fetch(`${apiUrl}/ingredients/type/list`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ searchTerm })
+    })
+
+    if (!res.ok) {
+      throw res
+    }
+
+    const { ingredients } = await res.json()
+    return ingredients
   }
   catch (e) {
     console.error(e.message)

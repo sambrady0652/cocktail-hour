@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Form, Select, Button, Box, Text } from 'grommet'
+import { Form, Button, Box, Text } from 'grommet'
 
 import { fetchDrinks, setSearchResults } from '../../store/search'
+import IngredientSelectField from './IngredientsSelectField'
 
 const IngredientsSearchForm = () => {
-  const [ingredient, setIngredient] = useState('Brandy');
+  const [ingredient, setIngredient] = useState('');
   const dispatch = useDispatch()
 
   const handleSubmit = async (e) => {
@@ -15,17 +16,11 @@ const IngredientsSearchForm = () => {
   }
 
   return (
-    <Box>
-
-
-      <Text>Pick your favorite liquor</Text>
+    <Box width="small" background="#362725B3" height="medium" margin={{ vertical: "small" }} round="5px" >
+      <Text>Got something lying around?</Text>
       <Text>Let's find a drink with it!</Text>
       <Form onSubmit={handleSubmit}>
-        <Select
-          options={["Absinthe", "Brandy", "Gin", "Rum", "Tequila", "Vodka", "Whiskey"]}
-          value={ingredient}
-          onChange={({ option }) => setIngredient(option)}
-        />
+        <IngredientSelectField ingredient={ingredient} setIngredient={setIngredient} />
         <Button
           plain
           hoverIndicator={{ color: "#362725B3", opacity: "B3" }}

@@ -1,4 +1,5 @@
 from collections import namedtuple
+import itertools
 import json
 from app.models import User, Ingredient, Drink
 from app import app, db
@@ -29,7 +30,7 @@ with app.app_context():
                 image_url=drink['image_url'],
                 ingredients=drink['ingredients'],
                 measurements=drink['measurements'],
-                measured_ingredients=(zip(drink['ingredients'], drink['measurements'])))
+                measured_ingredients=(itertools.zip_longest(drink['ingredients'], drink['measurements'])))
             db.session.add(new_drink)
             db.session.commit()
 
