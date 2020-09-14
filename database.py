@@ -3,6 +3,7 @@ import itertools
 import json
 from app.models import User, Ingredient, Drink
 from app import app, db
+from unused import unused
 import bcrypt
 from dotenv import load_dotenv
 load_dotenv()
@@ -14,11 +15,12 @@ with app.app_context():
     with open('./dataFetching/ingredients.js') as f:
         data = json.load(f)
         for ingredient in data:
-            new_ingredient = Ingredient(
-                name=ingredient['name'],
-                type=ingredient['type'])
-            db.session.add(new_ingredient)
-            db.session.commit()
+            if ingredient['name'] not in unused:
+                new_ingredient = Ingredient(
+                    name=ingredient['name'],
+                    type=ingredient['type'])
+                db.session.add(new_ingredient)
+                db.session.commit()
 
     with open('./dataFetching/drinks.js') as f:
         data = json.load(f)

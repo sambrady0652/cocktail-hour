@@ -55,16 +55,24 @@ def get_ingredients():
 # Retrieve list of drinks, given selected ingredient
 @ingredient_routes.route('/type/search/results', methods=['POST'])
 def get_results():
-    # Dropdown menu on front-end provides ingredient. Retrieve it here
-    ingredient = request.json.get('searchTerm')
-    if ingredient == "":
+    # Dropdown menu on front-end provides ingredients. Retrieve list of them here
+    ingredient_list = request.json.get('searchTerm')
+    if ingredient_list == []:
         return {'results': []}
 
-    # find drinks that include the ingredient
-    drinks_list = Drink.query.filter(Drink.ingredients.any(
-        ingredient, operator=ilike_op)).all()
+    # find drinks that include the ingredient(s) by iterating over list for every searched ingredient
+    drinks_list = []
+    for ingredient in ingredient_list:
+        drinks = Drink.query.filter(Drink.ingredients.any(
+            ingredient, operator=ilike_op)).order_by(Drink.name).all()
+        drinks_list.extend(drinks)
+
+    # ensure only one iteration of drink appears
+    filtered_drinks = []
+    for d in drinks_list:
+        if d not in filtered_drinks:
+            filtered_drinks.append(d)
 
     # Return list of drinks
-    print("THESE ARE RESULTS", drinks_list)
     return {'results': [drink.to_dict()
-                        for drink in drinks_list]}
+                        for drink in filtered_drinks]}

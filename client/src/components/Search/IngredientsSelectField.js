@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FormField, Select } from 'grommet'
+import { Select, CheckBoxGroup } from 'grommet'
 
 import { fetchIngredientTypes, fetchIngredients } from '../../store/search'
 
@@ -22,6 +22,11 @@ const IngredientsSelectField = (props) => {
     const ingredientsList = await fetchIngredients(option)
     setIngredientOptions(ingredientsList)
   }
+
+  const handleIngredientChoice = async ({ value: nextValue }) => {
+    setIngredient(nextValue)
+  }
+
   return (
     <>
 
@@ -33,10 +38,10 @@ const IngredientsSelectField = (props) => {
       />
 
       {type && (
-        <Select
+        <CheckBoxGroup
           options={ingredientOptions}
-          value={ingredient}
-          onChange={({ option }) => setIngredient(option)}
+          // value={ingredient}
+          onChange={handleIngredientChoice}
         />
 
       )}
