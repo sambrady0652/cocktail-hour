@@ -20,7 +20,7 @@ const AccountMenu = () => {
       hoverIndicator={{ color: "#362725", opacity: "B3" }}
       label="Account"
       items={[
-        { label: 'Settings', onClick: () => { history.push("/settings") } },
+        { label: 'My Drinks', onClick: () => { history.push("/my_drinks") } },
         { label: 'Signout', onClick: () => handleClick() },
       ]}
     />

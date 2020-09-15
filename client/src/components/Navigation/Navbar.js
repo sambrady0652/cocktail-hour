@@ -39,13 +39,13 @@ const Navbar = () => {
               <Button plain hoverIndicator={{ color: "#362725B3", opacity: "B3" }} onClick={toggleSearch}><Search color="#FDCF89" /></Button>
             </Box>
           )}
-        <NavAnchor label="Browse Drinks" href="/drinks" />
+        <NavAnchor label="Find a Drink" href="/search" />
         {/* This Ternary Logic Determines whether to activate the 'My Favorite Drinks' link based on whether the user is signed in */}
         {needSignIn ?
           (
-            <NavAnchor disabled label="My Favorite Drinks" href="" />)
+            <NavAnchor disabled label="Create a Drink" href="" />)
           : (
-            <NavAnchor label="My Favorite Drinks" href="/my_favorites" />
+            <NavAnchor label="Create a Drink" href="/create_drink" />
           )}
         <Box width="xsmall" alignContent="center">
           {/* This Ternary Logic Determines whether to show the sign in button or account menu based on whether the user is signed in */}

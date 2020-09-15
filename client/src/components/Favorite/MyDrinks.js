@@ -1,16 +1,17 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import { Box } from 'grommet'
 
 import DrinkCard from '../Search/DrinkCard'
-import IngredientsSearchForm from '../Search/IngredientsSearchForm'
 import { fetchFavorites } from '../../store/auth';
 
 export const FavPageContext = createContext()
 
-const MyFavorites = () => {
+const MyDrinks = () => {
   const { userId } = useSelector(state => state.currentUser)
   const [favsList, setFavsList] = useState([])
+
 
   useEffect(() => {
     async function getFavs() {
@@ -22,6 +23,11 @@ const MyFavorites = () => {
     getFavs()
   }, [userId])
 
+  const { redirect } = useSelector(state => state.search)
+  if (redirect) {
+    return <Redirect to="/search_results" />
+  }
+
   return (
     <Box direction="row" align="start" justify="around" overflow="scroll" gap="small">
       <Box>
@@ -29,11 +35,11 @@ const MyFavorites = () => {
           {favsList.map(drink => <DrinkCard drink={drink} key={drink.id} />)}
         </FavPageContext.Provider>
       </Box>
-      <Box background="#832023" round="small">
-        <IngredientsSearchForm />
+      <Box width="large" background="#362725B3" height="medium" margin={{ vertical: "small" }} round="5px">
+        {/* ADD MY CREATED DRINKS HERE */}
       </Box>
     </Box>
   )
 }
 
-export default MyFavorites
+export default MyDrinks

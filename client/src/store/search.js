@@ -63,6 +63,35 @@ export const fetchIngredients = async (searchTerm) => {
   }
 }
 
+export const createDrink = async (drinkName, ingredients, measurements, instructions, alcoholic, imageUrl) => {
+  try {
+    const formData = new FormData();
+    formData.append("name", drinkName)
+    formData.append("ingredients", Array(ingredients))
+    formData.append("measurements", measurements)
+    formData.append("instructions", instructions)
+    formData.append("alcoholic", alcoholic)
+    if (imageUrl !== "") {
+      formData.append("image_url", imageUrl, `${drinkName}-image`)
+    }
+
+    const res = await fetch(`${apiUrl}/drinks/create`, {
+      method: 'post',
+      body: formData
+    });
+
+    if (!res.ok) {
+      throw res
+    }
+
+    const newDrink = await res.json()
+    console.log(newDrink)
+  }
+  catch (e) {
+    console.error(e.message)
+  }
+}
+
 //ACTION CREATORS
 //NOTE: redirect logic behaves as a switch between the Home Page and the Search Results page
 export const setSearchResults = (drinksList, redirect) => ({

@@ -4,11 +4,13 @@ import { useDispatch } from 'react-redux';
 import { Box } from 'grommet'
 
 import Home from './components/Home'
+import MyDrinks from './components/Favorite/MyDrinks'
 import Footer from './components/Navigation/Footer'
-import MyFavorites from './components/Favorite/MyFavorites'
 import Navbar from './components/Navigation/Navbar'
 import SearchResults from './components/Search/SearchResults'
+import SearchPage from './components/Search/SearchPage'
 import { setUser } from './store/auth'
+import CreateDrinks from './components/Create/CreateDrinks';
 
 
 function App() {
@@ -33,11 +35,17 @@ function App() {
                             exact path="/"
                             component={Home} />
                         <Route
+                            path="/create_drink"
+                            component={CreateDrinks} />
+                        <Route
+                            path="/search"
+                            component={SearchPage} />
+                        <Route
                             path="/search_results"
                             component={SearchResults} />
                         <Route
-                            path="/my_favorites"
-                            component={MyFavorites} />
+                            path="/my_drinks"
+                            component={MyDrinks} />
                     </Switch>
                 </Box>
             </BrowserRouter>

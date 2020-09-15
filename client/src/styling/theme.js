@@ -13,14 +13,16 @@ export const theme = {
     },
     focus: {
       border: {
-        color: "#58542D"
+        color: "#C0521F"
       },
+      outline: "none"
     },
     hover: {
       color: "#C0521F"
     },
     colors: {
       text: "#FDCF89",
+      placeholder: "#FDCF89"
     },
   },
   anchor: {
@@ -54,5 +56,13 @@ export const theme = {
       extend: "background-color: #832023; font-size: 16px; line-height: 10px"
     },
     extend: "border-top-style: hidden; border-right-style: hidden; border-left-style: hidden; border-bottom-color: #FDCF89; border-radius: 0px"
+  },
+  textArea: {
+    extend: "border-top-style: hidden; border-right-style: hidden; border-left-style: hidden; border-bottom-color: #FDCF89; border-radius: 0px"
+  },
+  formField: {
+    border: {
+      color: "#FDCF89",
+    }
   }
 };

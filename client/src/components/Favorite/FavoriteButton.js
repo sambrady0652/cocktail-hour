@@ -7,7 +7,7 @@ import ErrorBox from '../Auth/ErrorBox'
 import { favButton, fetchFavorites } from '../../store/auth'
 import { getIds } from './helperFunctions'
 import SignInButton from '../Navigation/SignInButton'
-import { FavPageContext } from './MyFavorites'
+import { FavPageContext } from './MyDrinks'
 
 const FavoriteButton = (props) => {
   const { drinkId, setIsFavorited, isFavorited } = props
