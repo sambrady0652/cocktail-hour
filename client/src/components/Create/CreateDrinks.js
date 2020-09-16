@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Box, Heading } from 'grommet'
+import { Box, Text } from 'grommet'
 
 import { createDrink, fetchIngredients } from '../../store/search'
 import DrinkPreview from './DrinkPreview'
@@ -16,23 +16,23 @@ const CreateDrinks = () => {
   //Individual
   const [measurement, setMeasurement] = useState("")
   const [ingredient, setIngredient] = useState("")
-  const [suggestions, setSuggestions] = useState([])
   //List 
   const [measurements, setMeasurements] = useState([])
   const [ingredients, setIngredients] = useState([])
   //Combined List
   const [measuredIngredients, setMeasuredIngredients] = useState([])
-
+  // Ingredient Suggestions
+  const [suggestions, setSuggestions] = useState([])
   // Preview State 
   const [drinkNamePreview, setDrinkNamePreview] = useState("")
   const [instructionsPreview, setInstructionsPreview] = useState("")
   const [imageUrlPreview, setImageUrlPreview] = useState("")
   const [alcoholicPreview, setAlcoholicPreview] = useState("Non alcoholic")
-
   //Used to redirect after form submission
   const history = useHistory()
 
-  const addPair = () => {
+  //Add Measurements and Ingredients to Preview and appends them to Form
+  const addMeasuredIngredients = () => {
     setMeasurements([...measurements, measurement])
     setIngredients([...ingredients, ingredient])
     setMeasuredIngredients([...measuredIngredients, [measurement, ingredient]])
@@ -40,20 +40,19 @@ const CreateDrinks = () => {
     setIngredient("")
   }
 
+  //Add Drink Name to Preview
   const addName = () => {
     setDrinkNamePreview(drinkName)
   }
+
+  //Add Instructions to Preview
   const addInstructions = () => {
     setInstructionsPreview(instructions)
   }
 
-  const getIngredientSuggestions = async (e) => {
-    setIngredient(e.target.value)
-    const suggestions = await fetchIngredients(e.target.value, "ingredients/suggestions")
-    setSuggestions(suggestions.map(suggObj => suggObj.name))
-  }
 
-  const handleCheck = (e) => {
+  //Add Alcoholic Indicator to Form and Preview
+  const addAlcoholic = (e) => {
     setAlcoholic(e.target.checked)
     if (alcoholic === false) {
       setAlcoholicPreview("Alcoholic")
@@ -63,20 +62,35 @@ const CreateDrinks = () => {
     }
   }
 
-  const handleImageChange = (e) => {
+  //Add Image to Form and Preview
+  const addImage = (e) => {
     setImageUrl(e.target.files.item(0))
     setImageUrlPreview(URL.createObjectURL(e.target.files.item(0)))
   }
 
+  //Fill suggestions Box for Text Input on Ingredients Form
+  const getIngredientSuggestions = async (e) => {
+    setIngredient(e.target.value)
+    const suggestions = await fetchIngredients(e.target.value, "ingredients/suggestions")
+    setSuggestions(suggestions.map(suggObj => suggObj.name))
+  }
+
+  //Submit Form and Creates Drink
   const handleSubmit = (e) => {
     e.preventDefault()
     createDrink(drinkName, ingredients, measurements, instructions, alcoholic, imageUrl)
     history.push("/my_drinks")
   }
 
+  //Pass Requisite State and Functions as Props to components 
+  const preview = {
+    imageUrlPreview,
+    drinkNamePreview,
+    alcoholicPreview,
+    measuredIngredients,
+    instructionsPreview
+  }
 
-  //Pass Requisite State and Functions as Props
-  const preview = { imageUrlPreview, drinkNamePreview, alcoholicPreview, measuredIngredients, instructionsPreview }
   const form = {
     drinkName,
     setDrinkName,
@@ -91,23 +105,23 @@ const CreateDrinks = () => {
     ingredient,
     setIngredient,
     suggestions,
-    addPair,
+    addMeasuredIngredients,
     addName,
     addInstructions,
     getIngredientSuggestions,
-    handleCheck,
-    handleImageChange,
+    addAlcoholic,
+    addImage,
     handleSubmit
   }
 
   return (
     <Box direction="row" align="start" justify="center" overflow="scroll" gap="large" style={{ position: "relative" }}>
       <Box>
-        <Heading>Preview of your new drink</Heading>
+        <Text>Preview of your new drink</Text>
         <DrinkPreview preview={preview} />
       </Box>
       <Box>
-        <Heading>Get Started</Heading>
+        <Text>Get Started</Text>
         <Box background="#362725B3" height="medium" margin={{ vertical: "small" }} round="5px" gap="small" align="center">
           <CreateDrinksForm form={form} />
         </Box>

@@ -17,77 +17,77 @@ const CreateDrinksForm = (props) => {
     setMeasurement,
     setIngredient,
     //Functions
-    addPair,
+    addMeasuredIngredients,
     addName,
     addInstructions,
     getIngredientSuggestions,
-    handleCheck,
-    handleImageChange,
+    addAlcoholic,
+    addImage,
     handleSubmit
   } = props.form
 
   return (
-    // <Box pad="small">
-    <Form onSubmit={handleSubmit}>
-      <Box direction="row">
-        <Box fill="horizontal">
-          <FormField
+    <Box pad="small">
+      <Form onSubmit={handleSubmit}>
+        <Box direction="row">
+          <Box fill="horizontal">
+            <FormField
+              required
+              placeholder="Your drink's name"
+              name="name"
+              type="text"
+              value={drinkName}
+              onChange={e => setDrinkName(e.target.value)} />
+          </Box>
+          <Button onClick={addName} icon={<Add color="#FDCF89" />} />
+        </Box>
+        <Box direction="row" >
+          <Box fill="horizontal">
+            <FormField
+              placeholder='"1/2 oz"'
+              name="measurements"
+              type="text"
+              value={measurement}
+              onChange={e => setMeasurement(e.target.value)} />
+          </Box>
+          <Box fill="horizontal">
+            <FormField
+              placeholder='"bourbon"'
+              name="ingredients"
+              type="text"
+              value={ingredient}
+              suggestions={suggestions}
+              onSelect={e => setIngredient(e.suggestion)}
+              onChange={getIngredientSuggestions} />
+          </Box>
+          <Button onClick={addMeasuredIngredients} icon={<Add color="#FDCF89" />} />
+        </Box>
+        <Box direction="row">
+          <TextArea
+            resize="vertical"
             required
-            placeholder="Your drink's name"
-            name="name"
+            placeholder="Instructions to make your drink"
+            name="instructions"
             type="text"
-            value={drinkName}
-            onChange={e => setDrinkName(e.target.value)} />
+            value={instructions}
+            onChange={e => setInstructions(e.target.value)} />
+          <Button onClick={addInstructions} icon={<Add color="#FDCF89" />} />
         </Box>
-        <Button onClick={addName} icon={<Add color="#FDCF89" />} />
-      </Box>
-      <Box direction="row" >
-        <Box fill="horizontal">
-          <FormField
-            placeholder='"1/2 oz"'
-            name="measurements"
-            type="text"
-            value={measurement}
-            onChange={e => setMeasurement(e.target.value)} />
+        <Box margin="small">
+          <input
+            name="imageUrl"
+            type="file"
+            label="Drink Image"
+            onChange={addImage} />
         </Box>
-        <Box fill="horizontal">
-          <FormField
-            placeholder='"bourbon"'
-            name="ingredients"
-            type="text"
-            value={ingredient}
-            suggestions={suggestions}
-            onSelect={e => setIngredient(e.suggestion)}
-            onChange={getIngredientSuggestions} />
-        </Box>
-        <Button onClick={addPair} icon={<Add color="#FDCF89" />} />
-      </Box>
-      <Box direction="row">
-        <TextArea
-          resize="vertical"
-          required
-          placeholder="Instructions to make your drink"
-          name="instructions"
-          type="text"
-          value={instructions}
-          onChange={e => setInstructions(e.target.value)} />
-        <Button onClick={addInstructions} icon={<Add color="#FDCF89" />} />
-      </Box>
-      <Box margin="small">
-        <input
-          name="imageUrl"
-          type="file"
-          label="Drink Image"
-          onChange={handleImageChange} />
-      </Box>
-      <CheckBox
-        checked={alcoholic}
-        label="contains alcohol?"
-        onChange={handleCheck} />
-      <Text>Confirm the preview contains all the accurate information</Text>
-      <Button type="submit" >Create Drink</Button>
-    </Form>
-    // </Box>
+        <CheckBox
+          checked={alcoholic}
+          label="contains alcohol?"
+          onChange={addAlcoholic} />
+        <Text>Confirm the preview contains all the accurate information</Text>
+        <Button type="submit" >Create Drink</Button>
+      </Form>
+    </Box>
   )
 }
 

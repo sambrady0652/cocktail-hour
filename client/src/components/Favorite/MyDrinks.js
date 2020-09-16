@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom'
-import { Box } from 'grommet'
+import { Box, Heading } from 'grommet'
 
 import DrinkCard from '../Search/DrinkCard'
 import { fetchFavorites } from '../../store/auth';
@@ -31,13 +31,14 @@ const MyDrinks = () => {
   return (
     <Box direction="row" align="start" justify="around" overflow="scroll" gap="small">
       <Box>
+        <Heading>My Favorite Drinks</Heading>
         <FavPageContext.Provider value={setFavsList} >
           {favsList.map(drink => <DrinkCard drink={drink} key={drink.id} />)}
         </FavPageContext.Provider>
       </Box>
-      <Box width="large" background="#362725B3" height="medium" margin={{ vertical: "small" }} round="5px">
-        {/* ADD MY CREATED DRINKS HERE */}
-      </Box>
+      {/* <Box width="large" background="#362725B3" height="medium" margin={{ vertical: "small" }} round="5px">
+        ADD MY CREATED DRINKS HERE 
+      </Box> */}
     </Box>
   )
 }
