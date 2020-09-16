@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import { Box, Text } from 'grommet'
+import { useHistory, Redirect } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Box } from 'grommet'
 
 import { createDrink, fetchIngredients } from '../../store/search'
 import DrinkPreview from './DrinkPreview'
@@ -114,19 +115,22 @@ const CreateDrinks = () => {
     handleSubmit
   }
 
+  const { redirect } = useSelector(state => state.search)
+  if (redirect) {
+    return <Redirect to="/search_results" />
+  }
+
   return (
     <Box direction="row" align="start" justify="center" overflow="scroll" gap="large" style={{ position: "relative" }}>
       <Box>
-        <Text>Preview of your new drink</Text>
+
         <DrinkPreview preview={preview} />
       </Box>
-      <Box>
-        <Text>Get Started</Text>
-        <Box background="#362725B3" height="medium" margin={{ vertical: "small" }} round="5px" gap="small" align="center">
-          <CreateDrinksForm form={form} />
-        </Box>
+      <Box background="#362725B3" height="medium" margin={{ vertical: "small" }} round="5px" gap="small" align="center">
+        <CreateDrinksForm form={form} />
       </Box>
     </Box>
+
   )
 }
 

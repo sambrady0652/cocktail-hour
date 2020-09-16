@@ -1,9 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom';
-import { Box, Text } from 'grommet'
+import { Box } from 'grommet'
 
-import IngredientsSearchForm from './Search/IngredientsSearchForm'
 
 const Home = () => {
   const { redirect } = useSelector(state => state.search)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Form, CheckBox, TextArea, Text, FormField } from 'grommet'
+import { Box, Button, Form, CheckBox, TextArea, FormField, Paragraph, Text } from 'grommet'
 import { Add } from 'grommet-icons'
 
 const CreateDrinksForm = (props) => {
@@ -30,6 +30,7 @@ const CreateDrinksForm = (props) => {
     <Box pad="small">
       <Form onSubmit={handleSubmit}>
         <Box direction="row">
+          <Button onClick={addName} icon={<Add color="#FDCF89" />} />
           <Box fill="horizontal">
             <FormField
               required
@@ -39,9 +40,9 @@ const CreateDrinksForm = (props) => {
               value={drinkName}
               onChange={e => setDrinkName(e.target.value)} />
           </Box>
-          <Button onClick={addName} icon={<Add color="#FDCF89" />} />
         </Box>
         <Box direction="row" >
+          <Button onClick={addMeasuredIngredients} icon={<Add color="#FDCF89" />} />
           <Box fill="horizontal">
             <FormField
               placeholder='"1/2 oz"'
@@ -60,9 +61,10 @@ const CreateDrinksForm = (props) => {
               onSelect={e => setIngredient(e.suggestion)}
               onChange={getIngredientSuggestions} />
           </Box>
-          <Button onClick={addMeasuredIngredients} icon={<Add color="#FDCF89" />} />
+
         </Box>
         <Box direction="row">
+          <Button onClick={addInstructions} icon={<Add color="#FDCF89" />} />
           <TextArea
             resize="vertical"
             required
@@ -71,21 +73,25 @@ const CreateDrinksForm = (props) => {
             type="text"
             value={instructions}
             onChange={e => setInstructions(e.target.value)} />
-          <Button onClick={addInstructions} icon={<Add color="#FDCF89" />} />
         </Box>
-        <Box margin="small">
+        <Box margin={{ left: "large", vertical: "small" }}>
           <input
             name="imageUrl"
             type="file"
             label="Drink Image"
             onChange={addImage} />
         </Box>
-        <CheckBox
-          checked={alcoholic}
-          label="contains alcohol?"
-          onChange={addAlcoholic} />
-        <Text>Confirm the preview contains all the accurate information</Text>
-        <Button type="submit" >Create Drink</Button>
+        <Box margin="small">
+          <CheckBox
+            checked={alcoholic}
+            label="contains alcohol?"
+            onChange={addAlcoholic} />
+        </Box>
+        <Box margin={{ left: "large", vertical: "small" }}>
+          <Paragraph size="small" margin={{ top: "none" }}>Please confirm the Preview is accurate</Paragraph>
+        </Box>
+        <Button type="submit" plain={false} fill="horizontal" primary
+          color="#C0521F"><Text color="#362725">Create Drink</Text></Button>
       </Form>
     </Box>
   )
