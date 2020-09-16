@@ -19,7 +19,7 @@ const IngredientsSelectField = (props) => {
 
   const handleTypeChoice = async ({ option }) => {
     setType(option)
-    const ingredientsList = await fetchIngredients(option)
+    const ingredientsList = await fetchIngredients(option, "ingredients/type/search")
     setIngredientOptions(ingredientsList)
   }
 

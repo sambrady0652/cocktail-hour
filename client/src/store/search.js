@@ -41,9 +41,9 @@ export const fetchIngredientTypes = async () => {
   }
 }
 
-export const fetchIngredients = async (searchTerm) => {
+export const fetchIngredients = async (searchTerm, route) => {
   try {
-    const res = await fetch(`${apiUrl}/ingredients/type/list`, {
+    const res = await fetch(`${apiUrl}/${route}`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'

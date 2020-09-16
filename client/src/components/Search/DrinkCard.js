@@ -28,7 +28,7 @@ const DrinkCard = (props) => {
   return (
     <Box width="large" background="#362725B3" height="medium" margin={{ vertical: "small" }} round="5px">
       <Box direction="row" round="small" fill="vertical">
-        <Box fill>
+        <Box width="medium">
           <Image
             fit="cover"
             src={image_url}

@@ -2,12 +2,11 @@
 import boto3
 from datetime import datetime
 from flask import Blueprint, jsonify, request
-import itertools
 import os
 import re
 
 # Local Imports
-from app.models import db, User, Drink
+from app.models import db, User, Drink, Ingredient
 
 drink_routes = Blueprint('drinks', __name__)
 
@@ -52,10 +51,13 @@ def create_drink():
     measurements = request.form.get('measurements').split(',')
     instructions = request.form.get('instructions')
     alcoholic = request.form.get('alcoholic')
+    # Convert into appropriate data type
     if alcoholic == "true":
         alcoholic = "Alcoholic"
     if alcoholic == "false":
         alcoholic = "Non alcoholic"
+    # Provide default image url if one is not provided
+    # if one is provided, push it to AWS Bucket and reassign
     image_url = "https://cocktail-hour-site-images.s3.amazonaws.com/13598470Untitled-3-512.png"
     if len(request.files) > 0:
         img = request.files['image_url']
@@ -63,7 +65,19 @@ def create_drink():
         bucket.put_object(Key=key, Body=img, ContentType=img.content_type)
         image_url = f'https://cocktail-hour-user-photos.s3.us-east-2.amazonaws.com/{key}'
 
+    # create tuple
     measured_ingredients = list(zip(ingredients, measurements))
+
+    # Pull list of existing ingredients from database
+    ing_list = [i.name.lower() for i in Ingredient.query.all()]
+
+    # Add any ingredients that do not already exist to the database
+    for i in ingredients:
+        if i.lower() not in ing_list:
+            new_ingredient = Ingredient(name=i, type="Newly Added")
+            db.session.add(new_ingredient)
+            db.session.commit()
+
     # validations
     errors = validate_create_drink(
         name, ingredients, measurements, instructions, alcoholic, image_url)

@@ -11,7 +11,7 @@ const IngredientsSearchForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const results = await fetchDrinks(ingredient, "ingredients/type/search/results")
+    const results = await fetchDrinks(ingredient, "ingredients/type/search/drinks")
     dispatch(setSearchResults(results, true))
   }
 
