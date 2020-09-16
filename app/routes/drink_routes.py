@@ -62,7 +62,8 @@ def create_drink():
     if len(request.files) > 0:
         img = request.files['image_url']
         key = f'{datetime.now()}{img.filename}'
-        bucket.put_object(Key=key, Body=img, ContentType=img.content_type)
+        bucket.put_object(Key=key, Body=img,
+                          ContentType=img.content_type, ACL='public-read')
         image_url = f'https://cocktail-hour-user-photos.s3.us-east-2.amazonaws.com/{key}'
 
     # create tuple

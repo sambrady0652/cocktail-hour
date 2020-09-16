@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Button, Form, FormField, Text, CheckBox, Heading, Image, Paragraph, TextInput, TextArea } from 'grommet'
+import { Box, Button, Form, Text, CheckBox, Heading, Image, Paragraph, TextInput, TextArea } from 'grommet'
 import { Add } from 'grommet-icons'
 
 import { createDrink, fetchIngredients } from '../../store/search'
@@ -121,8 +121,8 @@ const CreateDrinks = () => {
             </Box>
             <Box direction="row">
               <Box>
-                <FormField
-                  required
+                <TextInput
+
                   placeholder='"1/2 oz"'
                   name="measurements"
                   type="text"
@@ -131,12 +131,13 @@ const CreateDrinks = () => {
               </Box>
               <Box>
                 <TextInput
-                  required
+
                   placeholder='"bourbon"'
                   name="ingredients"
                   type="text"
                   value={ingredient}
                   suggestions={suggestions}
+                  onSelect={e => setIngredient(e.suggestion)}
                   onChange={getIngredientSuggestions} />
               </Box>
               <Button onClick={addPair} icon={<Add color="#FDCF89" />} />
