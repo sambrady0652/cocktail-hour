@@ -15,7 +15,6 @@ class User(db.Model):
     last_name = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     encrypted_password = db.Column(db.LargeBinary, nullable=False)
-    image_url = db.Column(db.String)
     favorites = db.relationship("Favorite", back_populates="user")
 
     def to_dict(self):
@@ -24,8 +23,6 @@ class User(db.Model):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
-            "image_url": self.image_url,
-            # "favorites": self.favorites
         }
 
 
@@ -68,7 +65,6 @@ class Drink(db.Model):
             "ingredients": self.ingredients,
             "measurements": self.measurements,
             "measured_ingredients": self.measured_ingredients,
-            # "favorites": self.favorites
         }
 
 

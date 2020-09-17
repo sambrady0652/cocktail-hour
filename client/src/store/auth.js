@@ -34,16 +34,13 @@ export const signIn = (email, password) => async dispatch => {
 }
 
 //SIGN UP 
-export const signUp = (firstName, lastName, email, password, imageUrl) => async dispatch => {
+export const signUp = (firstName, lastName, email, password) => async dispatch => {
   try {
     const formData = new FormData();
     formData.append("first_name", firstName)
     formData.append("last_name", lastName)
     formData.append("email", email)
     formData.append("password", password)
-    if (imageUrl !== "") {
-      formData.append("imageUrl", imageUrl, `${firstName}-profpic`)
-    }
 
     const response = await fetch(`${apiUrl}/users/signup`, {
       method: 'post',

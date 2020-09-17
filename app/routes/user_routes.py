@@ -1,6 +1,5 @@
 # External Imports
 import bcrypt
-import boto3
 from datetime import datetime
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, jwt_optional
 from flask import Blueprint, jsonify, request
@@ -13,10 +12,6 @@ from app.models import db, User, Favorite, Drink
 
 user_routes = Blueprint('users', __name__)
 
-# Initialize Boto3 to use AWS
-s3 = boto3.resource('s3')
-bucket = s3.Bucket(os.environ.get('AWS_BUCKET'))
-
 
 # SIGNUP
 @user_routes.route('/signup', methods=['POST'])
@@ -26,14 +21,6 @@ def signup():
     first_name = request.form.get('first_name')
     last_name = request.form.get('last_name')
     password = request.form.get('password')
-    # set default profile picture unless a new one is supplied
-    image_url = "https://cocktail-hour-user-photos.s3.us-east-2.amazonaws.com/default_avatar.png"
-    if len(request.files) > 0:
-        img = request.files['imageUrl']
-        key = f'{datetime.now()}{img.filename}'
-        # if a new one is supplied, upload it to AWS Bucket and reassign value to new image
-        bucket.put_object(Key=key, Body=img, ContentType=img.content_type)
-        image_url = f'https://cocktail-hour-user-photos.s3.us-east-2.amazonaws.com/{key}'
 
     # validate there are no errors
     errors = validations_signup(email, first_name, last_name, password)
@@ -47,7 +34,7 @@ def signup():
 
     # create user in database, save changes to database
     new_user = User(email=email, first_name=first_name,
-                    last_name=last_name, encrypted_password=hashed_password, image_url=image_url)
+                    last_name=last_name, encrypted_password=hashed_password)
     db.session.add(new_user)
     db.session.commit()
 
@@ -90,61 +77,6 @@ def signin():
     }, 200
 
 
-# Fetches/Updates User Details
-@user_routes.route('/<int:id>', methods=['GET', 'PATCH'])
-@jwt_required
-def user_page(id):
-    if request.method == 'GET':
-        found_user = User.query.filter(User.id == id).first()
-        if found_user:
-            return found_user.to_dict()
-        else:
-            return {'error': "User not found"}, 400
-    else:
-        # gather user submitted data
-        json = request.get_json()
-        first_name = json.get('first_name')
-        last_name = json.get('last_name')
-        location = json.get('location')
-
-        # validate user submitted data
-        errors = validations_user_details(last_name, first_name)
-        if len(errors) > 0:
-            return {'errors': errors}
-
-        # get id from json web token
-        current_user_id = get_jwt_identity()
-
-        # if user is found in database then update user details. If not, send error to client
-        found_user = User.query.filter(User.id == current_user_id).first()
-        if(found_user):
-            found_user.first_name = first_name
-            found_user.last_name = last_name
-            found_user.location = location
-            db.session.commit()
-            return {'message': 'Success'}, 200
-        else:
-            return {'error': 'User was not found'}, 400
-
-
-# Deletes Account
-@user_routes.route('/delete_account', methods=['DELETE'])
-@jwt_required
-def delete_account():
-    # get id from json web token
-    current_user_id = get_jwt_identity()
-
-    # retrieve user from data to be deleted if exists
-    found_user = User.query.filter(User.id == current_user_id).first()
-    if not found_user:
-        return {'error': 'User not found'}, 400
-
-    # delete user from database
-    db.session.delete(found_user)
-    db.session.commit()
-    return {'status': 200}
-
-
 # FAVORITES ROUTES
 # Fetch User's Favorites
 @user_routes.route('/<int:id>/favorites')
@@ -158,18 +90,19 @@ def get_favorites(id):
     return {'favorites': favorite_drinks}
 
 
+# Favorite/Unfavorite Drinks
 @user_routes.route('/<int:id>/favorites/<int:drink_id>', methods=['POST', 'DELETE'])
 @jwt_optional
 def fav_drink(id, drink_id):
     if request.method == 'POST':
-        # FAVORITE DRINK
+        # Create, add, and return new favorite
         new_favorite = Favorite(user_id=id, drink_id=drink_id)
         db.session.add(new_favorite)
         db.session.commit()
         return {'new_favorite_id': new_favorite.to_dict()['drink_id']}
 
     if request.method == 'DELETE':
-        # UNFAVORITE DRINK
+        # Find and remove targeted favorite
         favorite_to_delete = Favorite.query.filter(
             and_(Favorite.user_id == id, Favorite.drink_id == drink_id)).one()
         db.session.delete(favorite_to_delete)
@@ -185,10 +118,13 @@ def validations_signup(email, first_name, last_name, password):
     email_found = User.query.filter(User.email == email).first()
     if(email_found):
         errors.append('Account already exists with this email address')
+    # Check all information is provided
     if not email or not first_name or not last_name or not password:
         errors.append('Please ensure all fields are complete')
+    # Check email is valid
     if email and not re.search(regex, email):
         errors.append('email is not valid')
+    # Keep lengths in check
     if len(first_name) > 25:
         errors.append('first name is too long')
     if len(last_name) > 25:
@@ -200,37 +136,20 @@ def validations_signup(email, first_name, last_name, password):
 
 def validations_signin(email, password):
     errors = []
+    # Check email and password are present
     if not email or not password:
         errors.append('Please provide an email and password')
         return errors
+    # Attempt to find user with given email
     user = User.query.filter_by(email=email).first()
     if not user:
         errors.append('No user with that email was found')
         return errors
+
+    # If user is found, check password
     if user:
         password_match = bcrypt.checkpw(
             password.encode('utf-8'), user.encrypted_password)
         if not password_match:
             errors.append('Password is incorrect')
-        if len(email) > 100:
-            errors.append('please shorten your email')
-    return errors
-
-
-def validations_user_details(last_name, first_name):
-    errors = []
-    if not last_name:
-        errors.append('first name is missing')
-    if not first_name:
-        errors.append('last name is missing')
-    if len(errors) > 0:
-        return errors
-    if len(last_name) > 40:
-        errors.append('last name length is too long')
-    if len(first_name) > 40:
-        errors.append('first name length is too long')
-    if len(last_name) < 1:
-        errors.append('last name was not provided')
-    if len(first_name) < 1:
-        errors.append('first name was not provided')
     return errors

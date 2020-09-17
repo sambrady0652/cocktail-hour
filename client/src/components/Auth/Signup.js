@@ -12,13 +12,12 @@ const Signup = (props) => {
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
   const { authErrors } = useSelector(state => state.currentUser)
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(signUp(firstName, lastName, email, password, imageUrl))
+    dispatch(signUp(firstName, lastName, email, password))
   }
   const { toggleLast } = props
   return (
@@ -55,13 +54,6 @@ const Signup = (props) => {
           type="password"
           value={password}
           onChange={e => setPassword(e.target.value)} />
-        <Box margin="small">
-          <input
-            name="imageUrl"
-            type="file"
-            label="Profile Picture"
-            onChange={e => setImageUrl(e.target.files.item(0))} />
-        </Box>
         <Button
           type="submit"
           plain={false}

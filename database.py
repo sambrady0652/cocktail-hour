@@ -40,9 +40,7 @@ with app.app_context():
         first_name="Default",
         last_name="User",
         email="default@user.com",
-        encrypted_password=bcrypt.hashpw(
-            "password".encode('utf-8'), bcrypt.gensalt(14)),
-        image_url="https://cocktail-hour-user-photos.s3.us-east-2.amazonaws.com/default_avatar.png")
+        encrypted_password=bcrypt.hashpw("password".encode('utf-8'), bcrypt.gensalt(14)))
 
     db.session.add(default_user)
     db.session.commit()
