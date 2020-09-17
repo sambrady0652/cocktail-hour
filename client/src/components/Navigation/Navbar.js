@@ -22,7 +22,7 @@ const Navbar = () => {
       setHeading("Cocktail Hour")
     }
     else if (pathname === "/search") {
-      setHeading("Search Drinks")
+      setHeading("Find Drinks")
     }
     else if (pathname === "/search_results") {
       setHeading("Search Results")
@@ -54,7 +54,7 @@ const Navbar = () => {
       style={{ position: "sticky", top: "0px" }}>
       {/* Heading Container */}
       <Box width="medium" align="center" margin="none" >
-        <Anchor href='/' color="#FDCF89" ><Heading level={3} margin="small">{heading}</Heading></Anchor>
+        <Anchor href='/' color="#FDCF89" ><Heading level={3} margin="small" style={{ fontFamily: "Copperplate" }}>{heading}</Heading></Anchor>
       </Box>
       {/* Other Components Container */}
       <Header >

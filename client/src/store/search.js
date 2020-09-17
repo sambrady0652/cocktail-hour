@@ -83,9 +83,6 @@ export const createDrink = async (drinkName, ingredients, measurements, instruct
     if (!res.ok) {
       throw res
     }
-
-    const newDrink = await res.json()
-    console.log(newDrink)
   }
   catch (e) {
     console.error(e.message)

@@ -90,8 +90,9 @@ const CreateDrinksForm = (props) => {
         <Box margin={{ left: "large", vertical: "small" }}>
           <Paragraph size="small" margin={{ top: "none" }}>Please confirm the Preview is accurate</Paragraph>
         </Box>
-        <Button type="submit" plain={false} fill="horizontal" primary
-          color="#C0521F"><Text color="#362725">Create Drink</Text></Button>
+        <Button type="submit" plain={false} fill="horizontal">
+          Create Drink
+        </Button>
       </Form>
     </Box>
   )

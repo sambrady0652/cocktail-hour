@@ -2,7 +2,7 @@ export const theme = {
   global: {
     font: {
       color: "#FDCF89",
-      family: 'Arial',
+      family: 'Optima',
       size: '16px',
       height: '20px',
     },
@@ -23,7 +23,7 @@ export const theme = {
     },
     colors: {
       text: "#FDCF89",
-      placeholder: "#FDCF89",
+      placeholder: "#FDCF89B3",
       control: "#FDCF89"
     },
   },
@@ -68,5 +68,5 @@ export const theme = {
     border: {
       color: "#FDCF89",
     }
-  }
+  },
 };

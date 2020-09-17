@@ -4,6 +4,7 @@ import os
 import re
 # This operator works with the SQLAlchemy ARRAY Data Type used in the Model
 from sqlalchemy.sql.operators import ilike_op
+from sqlalchemy.sql.expression import func
 
 # Local Imports
 from app.models import db, User, Drink, Ingredient
@@ -79,7 +80,7 @@ def get_results():
     drinks_list = []
     for ingredient in ingredient_list:
         drinks = Drink.query.filter(Drink.ingredients.any(
-            ingredient, operator=ilike_op)).order_by(Drink.name).all()
+            ingredient, operator=ilike_op)).order_by(func.random()).all()
         drinks_list.extend(drinks)
 
     # ensure only one iteration of drink appears

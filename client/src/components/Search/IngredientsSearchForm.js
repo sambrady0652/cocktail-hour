@@ -13,18 +13,18 @@ const IngredientsSearchForm = () => {
     e.preventDefault()
     const results = await fetchDrinks(ingredient, "ingredients/type/search/drinks")
     dispatch(setSearchResults(results, true))
+    setIngredient([])
   }
 
   return (
     <Box width="medium" background="#362725B3" margin={{ vertical: "small" }} round="5px" pad="small" >
-      <Text>Got something lying around?</Text>
-      <Text>Let's find a drink with it!</Text>
       <Form onSubmit={handleSubmit}>
         <IngredientSelectField ingredient={ingredient} setIngredient={setIngredient} />
         <Button
           fill
+          plain={false}
           type="submit" >
-          Go!
+          Find Drinks
         </Button>
       </Form>
     </Box>

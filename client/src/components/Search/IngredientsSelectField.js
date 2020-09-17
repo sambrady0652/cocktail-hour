@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Select, CheckBoxGroup, Text } from 'grommet'
+import { Select, CheckBoxGroup, Text, Box } from 'grommet'
 
 import { fetchIngredientTypes, fetchIngredients } from '../../store/search'
 
@@ -29,19 +29,22 @@ const IngredientsSelectField = (props) => {
 
   return (
     <>
-
-      <Select
-        placeholder={<Text>ingredient types</Text>}
-        options={typeOptions}
-        value={type}
-        onChange={handleTypeChoice}
-      />
+      <Box pad="small">
+        <Select
+          placeholder="ingredient types"
+          options={typeOptions}
+          value={type}
+          onChange={handleTypeChoice}
+        />
+      </Box>
 
       {type && (
-        <CheckBoxGroup
-          options={ingredientOptions}
-          onChange={handleIngredientChoice}
-        />
+        <Box pad="small">
+          <CheckBoxGroup
+            options={ingredientOptions}
+            onChange={handleIngredientChoice}
+          />
+        </Box>
 
       )}
     </>

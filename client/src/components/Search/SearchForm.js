@@ -43,7 +43,7 @@ const SearchForm = (props) => {
     <Form onSubmit={handleSubmit}>
       <Box direction="row" justify="center" alignContent="center">
         <TextInput
-          placeholder={<Text>Quickly find your favorite drink</Text>}
+          placeholder="Quickly find a drink by name"
           type="text"
           name="searchTerm"
           value={searchTerm}
