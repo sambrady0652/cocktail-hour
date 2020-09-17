@@ -38,7 +38,7 @@ const Foot = () => {
           </Anchor>
         </Box>
         <Box align='end' justify="center">
-          <Text size="xsmall" color="#FDCF89">Application by Sam Brady</Text>
+          <Text size="xsmall" color="#FDCF89">App by Sam Brady</Text>
           <Text size="xsmall" color="#FDCF89">
             Data supplied by <Anchor
               target="_blank"
