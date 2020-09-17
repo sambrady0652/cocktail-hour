@@ -50,9 +50,8 @@ const Navbar = () => {
     <Header
       fill="horizontal"
       justify="around"
-      border="bottom"
       background="#362725B3"
-      style={{ position: "fixed", top: "0px" }}>
+      style={{ position: "sticky", top: "0px" }}>
       {/* Heading Container */}
       <Box width="medium" align="center" margin="none" >
         <Anchor href='/' color="#FDCF89" ><Heading level={3} margin="small">{heading}</Heading></Anchor>

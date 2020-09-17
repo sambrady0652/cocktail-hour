@@ -25,32 +25,32 @@ function App() {
         }
     })
     return (
-        <Box fill style={{ position: "absolute" }} background="url(https://cocktail-hour-user-photos.s3.us-east-2.amazonaws.com/scope1.jpg)">
-            <BrowserRouter>
+        <BrowserRouter>
+            <Box
+                fill
+                style={{ position: "fixed" }}
+                background="url(https://cocktail-hour-user-photos.s3.us-east-2.amazonaws.com/scope1.jpg)">
                 <Navbar />
-                {/* Setting this Box as main Content Container, positioning it underneath the Navbar */}
-                <Box style={{ position: "relative", top: 60, bottom: 60 }} >
-                    <Switch>
-                        <Route
-                            exact path="/"
-                            component={Home} />
-                        <Route
-                            path="/create_drink"
-                            component={CreateDrinks} />
-                        <Route
-                            path="/search"
-                            component={SearchPage} />
-                        <Route
-                            path="/search_results"
-                            component={SearchResults} />
-                        <Route
-                            path="/my_drinks"
-                            component={MyDrinks} />
-                    </Switch>
-                </Box>
-            </BrowserRouter>
-            <Footer />
-        </Box>
+                <Switch >
+                    <Route
+                        exact path="/"
+                        component={Home} />
+                    <Route
+                        path="/create_drink"
+                        component={CreateDrinks} />
+                    <Route
+                        path="/search"
+                        component={SearchPage} />
+                    <Route
+                        path="/search_results"
+                        component={SearchResults} />
+                    <Route
+                        path="/my_drinks"
+                        component={MyDrinks} />
+                </Switch>
+                <Footer />
+            </Box>
+        </BrowserRouter>
     );
 }
 
