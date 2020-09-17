@@ -29,7 +29,7 @@ const MyDrinks = () => {
   }
 
   return (
-    <Box direction="row" align="start" justify="around" overflow="scroll" gap="small">
+    <Box direction="row" align="start" justify="around" overflow="scroll" gap="small" style={{ position: "relative", padding: "0px", margin: "0px" }}>
       <Box>
         <FavPageContext.Provider value={setFavsList} >
           {favsList.map(drink => <DrinkCard drink={drink} key={drink.id} />)}

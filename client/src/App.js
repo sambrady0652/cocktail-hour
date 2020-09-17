@@ -25,11 +25,8 @@ function App() {
         }
     })
     return (
-        <BrowserRouter>
-            <Box
-                fill
-                style={{ position: "fixed" }}
-                background="url(https://cocktail-hour-user-photos.s3.us-east-2.amazonaws.com/scope1.jpg)">
+        <Box fill style={{ position: "fixed" }} background="url(https://cocktail-hour-user-photos.s3.us-east-2.amazonaws.com/scope1.jpg)">
+            <BrowserRouter>
                 <Navbar />
                 <Switch >
                     <Route
@@ -49,8 +46,8 @@ function App() {
                         component={MyDrinks} />
                 </Switch>
                 <Footer />
-            </Box>
-        </BrowserRouter>
+            </BrowserRouter>
+        </Box>
     );
 }
 
