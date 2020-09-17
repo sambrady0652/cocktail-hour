@@ -16,6 +16,7 @@ const Navbar = () => {
   const { pathname } = useLocation();
   const [heading, setHeading] = useState("Cocktail Hour")
 
+  // Function to change the Header 
   useEffect(() => {
     if (pathname === "/") {
       setHeading("Cocktail Hour")
@@ -34,6 +35,7 @@ const Navbar = () => {
     }
   }, [pathname])
 
+  // Button Click to show/hide search form in Navbar
   const toggleSearch = () => {
     if (showSearch) {
       setShowSearch(false)
@@ -44,10 +46,18 @@ const Navbar = () => {
   }
 
   return (
-    <Header fill="horizontal" justify="around" border="bottom" background="#362725B3" style={{ position: "fixed", top: "0px" }}>
-      <Header >
-        <Anchor href='/' color="#FDCF89" margin={{ left: "large" }}><Heading level={3}>{heading}</Heading></Anchor>
-      </Header>
+    //Main Nav Container
+    <Header
+      fill="horizontal"
+      justify="around"
+      border="bottom"
+      background="#362725B3"
+      style={{ position: "fixed", top: "0px" }}>
+      {/* Heading Container */}
+      <Box width="medium" align="center" margin="none" >
+        <Anchor href='/' color="#FDCF89" ><Heading level={3} margin="small">{heading}</Heading></Anchor>
+      </Box>
+      {/* Other Components Container */}
       <Header >
         {/* This Ternary Logic Determines whether to show the search form in the navbar */}
         {showSearch ?
@@ -57,7 +67,7 @@ const Navbar = () => {
             </Box>)
           : (
             <Box width="medium" align="end" justify="end">
-              <Button plain hoverIndicator={{ color: "#362725B3", opacity: "B3" }} onClick={toggleSearch}><Search color="#FDCF89" /></Button>
+              <Button plain onClick={toggleSearch}><Search color="#FDCF89" /></Button>
             </Box>
           )}
         <NavAnchor label="Find a Drink" href="/search" />
@@ -70,7 +80,7 @@ const Navbar = () => {
           )}
         <Box width="xsmall" alignContent="center">
           {/* This Ternary Logic Determines whether to show the sign in button or account menu based on whether the user is signed in */}
-          {needSignIn ? <SignInButton label="Sign in" /> : <AccountMenu />}
+          {needSignIn ? <SignInButton label={<Anchor color="#FDCF89">Sign In</Anchor>} /> : <AccountMenu />}
         </Box>
       </Header>
     </Header >

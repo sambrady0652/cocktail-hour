@@ -40,8 +40,6 @@ const SignInButton = (props) => {
     <Box>
       <Button
         plain
-        //NOTE: Setting Opacity Here affects HoverIndicator On Nav Button
-        hoverIndicator={{ color: "#362725", opacity: "B3" }}
         focusIndicator={false}
         label={label}
         icon={icon}

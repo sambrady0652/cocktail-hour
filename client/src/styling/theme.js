@@ -18,22 +18,25 @@ export const theme = {
       outline: "none"
     },
     hover: {
-      color: "#C0521F"
+      color: "#C0521F",
+      background: "#832023"
     },
     colors: {
       text: "#FDCF89",
-      placeholder: "#FDCF89"
+      placeholder: "#FDCF89",
+      control: "#FDCF89"
     },
   },
   anchor: {
     fontWeight: "normal",
     hover: {
       textDecoration: "none",
-      extend: "color: #C0521F" // CHANGE 
+      extend: "color: #C0521F"
     }
   },
   menu: {
     background: "#832023",
+    extend: "background-color: #832023"
   },
   select: {
     icons: {
@@ -55,7 +58,7 @@ export const theme = {
     suggestions: {
       extend: "background-color: #832023; font-size: 16px; line-height: 10px"
     },
-    extend: "border-top-style: hidden; border-right-style: hidden; border-left-style: hidden; border-bottom-color: #FDCF89; border-radius: 0px"
+    extend: "border-top-style: hidden; border-right-style: hidden; border-left-style: hidden; border-bottom-color: #FDCF89; border-radius: 0px; :focus : {color: '#C0521F'}"
   },
   textArea: {
     extend: "border-color: #FDCF89"

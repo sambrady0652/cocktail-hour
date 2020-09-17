@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu } from 'grommet'
+import { Menu, Anchor } from 'grommet'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
@@ -21,11 +21,8 @@ const AccountMenu = () => {
 
   return (
     <Menu
-      size="small"
       icon={false}
-      focusIndicator={false}
-      hoverIndicator={{ color: "#362725", opacity: "B3" }}
-      label="Account"
+      label={<Anchor color="#FDCF89">Account</Anchor>}
       items={[
         { label: 'My Drinks', onClick: () => handleMyDrinks() },
         { label: 'Signout', onClick: () => handleSignout() },

@@ -23,7 +23,6 @@ const IngredientsSearchForm = () => {
         <IngredientSelectField ingredient={ingredient} setIngredient={setIngredient} />
         <Button
           fill
-          hoverIndicator={{ color: "#362725B3", opacity: "B3" }}
           type="submit" >
           Go!
         </Button>

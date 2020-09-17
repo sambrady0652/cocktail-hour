@@ -53,7 +53,6 @@ const SearchForm = (props) => {
         />
         <Button
           plain
-          hoverIndicator={{ color: "#362725B3", opacity: "B3" }}
           type="submit" >
           <Search color="#FDCF89" />
         </Button>
