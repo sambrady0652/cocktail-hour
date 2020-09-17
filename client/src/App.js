@@ -29,7 +29,7 @@ function App() {
             <BrowserRouter>
                 <Navbar />
                 {/* Setting this Box as main Content Container, positioning it underneath the Navbar */}
-                <Box style={{ position: "relative", top: 85 }} >
+                <Box style={{ position: "relative", top: 60, bottom: 60 }} >
                     <Switch>
                         <Route
                             exact path="/"
