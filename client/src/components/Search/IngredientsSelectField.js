@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Select, CheckBoxGroup, Text, Box } from 'grommet'
+import { Select, CheckBoxGroup, Button, Box } from 'grommet'
 
 import { fetchIngredientTypes, fetchIngredients } from '../../store/search'
 
@@ -27,6 +27,11 @@ const IngredientsSelectField = (props) => {
     setIngredient(nextValue)
   }
 
+  const handleReset = () => {
+    setType("")
+    setIngredient([])
+  }
+
   return (
     <>
       <Box pad="small">
@@ -44,9 +49,16 @@ const IngredientsSelectField = (props) => {
             options={ingredientOptions}
             onChange={handleIngredientChoice}
           />
+          <Box margin="small">
+            <Button
+              onClick={handleReset}
+              plain >
+              Reset Search
+            </Button>
+          </Box>
         </Box>
-
       )}
+
     </>
   )
 }

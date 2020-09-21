@@ -7,6 +7,7 @@ import IngredientSelectField from './IngredientsSelectField'
 
 const IngredientsSearchForm = () => {
   const [ingredient, setIngredient] = useState([]);
+  const ingredientsPreview = ingredient.join(" or ")
   const dispatch = useDispatch()
 
   const handleSubmit = async (e) => {
@@ -18,6 +19,14 @@ const IngredientsSearchForm = () => {
 
   return (
     <Box width="medium" background="#362725B3" margin={{ vertical: "small" }} round="5px" pad="small" >
+      <Box>
+        <Text>
+          find drinks that include...
+        </Text>
+        {ingredientsPreview && (
+          <Text>{ingredientsPreview}</Text>
+        )}
+      </Box>
       <Form onSubmit={handleSubmit}>
         <IngredientSelectField ingredient={ingredient} setIngredient={setIngredient} />
         <Button
