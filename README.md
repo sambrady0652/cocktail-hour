@@ -23,18 +23,29 @@ See Cocktail Hour live [here](https://cocktailhours.herokuapp.com/)
 ### Home Page
 ![Home Page](https://github.com/sambrady0652/cocktail-hour/blob/master/wireframes/home_screen.png)
 
+A simple, lightweight design ensures snappy responsiveness at all points in the application
+
 ### Signin Modal
 
 ![Sign In](https://github.com/sambrady0652/cocktail-hour/blob/master/wireframes/sign_in.png)
+
+Users can easily sign in or create an account, or use the Guest Login if they're just browsing
 
 ### Create Drink Form
 
 ![Create Drink](https://github.com/sambrady0652/cocktail-hour/blob/master/wireframes/create_drink.gif)
 
+Adding your favorite drink is easy, plus the preview allows you to see what the final Recipe Card will look like before you upload.
+
 ### Searching
 
 ![Search By Name](https://github.com/sambrady0652/cocktail-hour/blob/master/wireframes/searching.gif)
+
+Users can use the search by name form anywhere on the site, and it will immediately redirect them to their search results. Plus search suggestions as users type to hasten the process.
+
 ![Search By Ingredient](https://github.com/sambrady0652/cocktail-hour/blob/master/wireframes/ingredients_form.png)
+
+Users can search by Ingredients using a combination of drop-down and checkbox menus. The search will yield results of drinks including any combination of the selected ingredients.
 
 
 
