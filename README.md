@@ -20,15 +20,21 @@ See Cocktail Hour live [here](https://cocktailhours.herokuapp.com/)
 
 ## Screen Views
 
-### Home Page 
+### Home Page
+![Home Page](https://github.com/sambrady0652/cocktail-hour/blob/master/wireframes/home_screen.png)
 
 ### Signin Modal
 
+![Sign In](https://github.com/sambrady0652/cocktail-hour/blob/master/wireframes/sign_in.png)
+
 ### Create Drink Form
 
-### Search Form 
+![Create Drink](https://github.com/sambrady0652/cocktail-hour/blob/master/wireframes/create_drink.gif)
 
-### Search Results
+### Searching
+
+![Search By Name](https://github.com/sambrady0652/cocktail-hour/blob/master/wireframes/searching.gif)
+![Search By Ingredient](https://github.com/sambrady0652/cocktail-hour/blob/master/wireframes/ingredients_form.png)
 
 
 
