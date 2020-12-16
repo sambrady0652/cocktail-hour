@@ -121,7 +121,7 @@ const CreateDrinks = () => {
   }
 
   return (
-    <Box direction="row" align="start" justify="center" overflow="scroll" gap="large" style={{ position: "relative", padding: "0px", margin: "0px", background: "none", backgroundColor: "transparent" }}>
+    <Box direction="row" align="start" justify="center" gap="large" style={{ position: "relative" }}>
       <DrinkPreview preview={preview} />
       <Box background="#362725B3" height="medium" margin={{ vertical: "small" }} round="5px" gap="small" align="center">
         <CreateDrinksForm form={form} />

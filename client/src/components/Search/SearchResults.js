@@ -12,7 +12,7 @@ const SearchResults = () => {
     return <Redirect to="/" />
   }
   return (
-    <Box direction="row" align="start" justify="center" overflow="scroll" gap="xlarge" style={{ position: "relative", padding: "0px", margin: "0px", background: "none", backgroundColor: "transparent" }}>
+    <Box direction="row" align="start" justify="center" overflow={{ "vertical": "auto" }} gap="xlarge" style={{ position: "relative" }}>
       {results && (
         <Box>
           {results.map(drink => <DrinkCard drink={drink} key={drink.id} />)}

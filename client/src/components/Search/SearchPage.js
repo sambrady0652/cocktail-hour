@@ -12,7 +12,7 @@ const SearchPage = () => {
   }
 
   return (
-    <Box direction="row" align="start" justify="center" overflow="scroll" gap="xlarge" style={{ position: "relative", padding: "0px", margin: "0px", background: "none", backgroundColor: "transparent" }}>
+    <Box direction="row" align="start" justify="center" gap="xlarge" style={{ position: "relative" }}>
       <IngredientSearchForm />
     </Box>
   )
